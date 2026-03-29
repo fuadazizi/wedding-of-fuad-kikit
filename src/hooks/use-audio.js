@@ -11,10 +11,12 @@ import { useState, useRef, useEffect, useCallback } from "react";
  * @returns {Object} Audio state and controls
  */
 export function useAudio(options = {}) {
-  const { src = "/audio/fulfilling-humming.mp3", loop = true } = options;
+  const { src = "/audio/beautiful-in-white.mp3", loop = true, initialVolume = 0.7 } = options;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [volume, setVolume] = useState(initialVolume);
+
   const audioRef = useRef(null);
   const wasPlayingRef = useRef(false);
 
@@ -23,6 +25,7 @@ export function useAudio(options = {}) {
     audioRef.current = new Audio(src);
     audioRef.current.loop = loop;
     audioRef.current.preload = "auto";
+    audioRef.current.volume = volume;
 
     const handleCanPlay = () => setIsReady(true);
     const handlePlay = () => {
