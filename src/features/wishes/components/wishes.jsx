@@ -18,7 +18,7 @@ import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { formatEventDate } from "@/lib/format-event-date";
 // import { useInvitation } from "@/features/invitation";
-import { fetchWishes, createWish, checkWishSubmitted } from "@/services/api";
+import { fetchWishes, createWish } from "@/services/api";
 import { MOCK_WISHES } from "@/services/mock-wishes";
 import { getGuestName } from "@/lib/invitation-storage";
 
@@ -34,9 +34,9 @@ export default function Wishes() {
   const [attendance, setAttendance] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [hasSubmittedWish, setHasSubmittedWish] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedWish, setSelectedWish] = useState(null);
+  const [hasSubmittedWish, setHasSubmittedWish] = useState(false);
   // All wishes in-memory, seeded from mock data when in static mode
   const [mockWishes, setMockWishes] = useState(
     IS_STATIC_MODE ? MOCK_WISHES : [],
@@ -61,26 +61,6 @@ export default function Wishes() {
       setGuestName(storedGuestName);
     }
   }, []);
-
-  // Check if guest has already submitted a wish (skipped in static mode)
-  useEffect(() => {
-    if (IS_STATIC_MODE) return;
-    const checkSubmissionStatus = async () => {
-      if (uid && guestName) {
-        try {
-          const response = await checkWishSubmitted(uid, guestName);
-          if (response.success && response.hasSubmitted) {
-            setHasSubmittedWish(true);
-          }
-        } catch (error) {
-          console.error("Error checking wish status:", error);
-          // Don't show error to user, just let them try to submit
-        }
-      }
-    };
-
-    checkSubmissionStatus();
-  }, [uid, guestName]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -126,39 +106,52 @@ export default function Wishes() {
   // Mutation for creating wishes (skipped in static mode)
   const createWishMutation = useMutation({
     mutationFn: (wishData) => createWish(wishData),
+
     onSuccess: (response) => {
       const newWish = response?.[0];
+
       if (newWish) {
-        // Optimistically update the cache
         queryClient.setQueryData(["wishes", uid], (old = []) => [
-          response.data,
+          newWish,
           ...old,
         ]);
-        // Reset form (keep guest name)
+
         setNewWish("");
         setAttendance("");
-        setHasSubmittedWish(true);
         setErrorMessage("");
-        // Show confetti
         setShowConfetti(true);
+        setHasSubmittedWish(true);
         setTimeout(() => setShowConfetti(false), 3000);
       }
     },
-    onError: (err) => {
-      console.error("Error submitting wish:", err);
 
-      // Check if it's a duplicate wish error
-      if (
-        err.code === "DUPLICATE_WISH" ||
-        err.message.includes("already submitted")
-      ) {
-        setHasSubmittedWish(true);
-        setErrorMessage("");
-      } else {
-        setErrorMessage("Gagal mengirim pesan. Silakan coba lagi.");
-        // Auto-hide error after 5 seconds
-        setTimeout(() => setErrorMessage(""), 5000);
+    onError: (err) => {
+      // console.log("Error code from API:", err.code);
+      if (err.code === "BAD_WORDS") {
+        setErrorMessage(
+          "Pesan Anda mengandung kata-kata yang tidak pantas. Silakan periksa kembali.",
+        );
+        return;
+      } else if (err.code === "DUPLICATE_WISH") {
+        setErrorMessage(
+          "Anda sudah mengirim pesan sebelumnya."
+        );
+        return;
       }
+
+      // Error dari trigger Supabase
+      if (err.code === "P0001") {
+        setErrorMessage(err.message);
+        return;
+      }
+
+      // Duplicate wish constraint
+      if (err.code === "23505") {
+        setErrorMessage("");
+        return;
+      }
+
+      setErrorMessage("Gagal mengirim pesan. Silakan coba lagi.");
     },
   });
 
@@ -180,7 +173,6 @@ export default function Wishes() {
       recordStats(newEntry);
       setNewWish("");
       setAttendance("");
-      setHasSubmittedWish(true);
       setErrorMessage("");
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
@@ -276,7 +268,7 @@ export default function Wishes() {
 
             {!isLoading &&
               !error &&
-              (!wishes || wishes.filter((w) => w.message).length === 0) && (
+              (!wishes || wishes.filter((w) => w?.message).length === 0) && (
                 <div className="text-center py-12">
                   <MessageCircle className="w-12 h-12 text-gray-300 mx-auto mb-4" />
                   <p className="text-gray-500">
@@ -287,12 +279,12 @@ export default function Wishes() {
 
             {!isLoading &&
               wishes &&
-              wishes.filter((w) => w.message).length > 0 && (
+              wishes.filter((w) => w?.message).length > 0 && (
                 <AnimatePresence>
                   <Marquee
-                    pauseOnHover={true}
+                    pauseOnHover={false}
                     repeat={2}
-                    className="[--duration:60s] [--gap:1rem] py-2"
+                    className="[--duration:30s] [--gap:1rem] py-2"
                   >
                     {wishes
                       .filter((w) => w.message)
@@ -346,10 +338,10 @@ export default function Wishes() {
                               {Date.now() -
                                 new Date(wish.created_at).getTime() <
                                 3600000 && (
-                                <span className="flex-shrink-0 px-2 py-0.5 rounded-full bg-rose-100 text-rose-600 text-xs font-medium">
-                                  New
-                                </span>
-                              )}
+                                  <span className="flex-shrink-0 px-2 py-0.5 rounded-full bg-rose-100 text-rose-600 text-xs font-medium">
+                                    New
+                                  </span>
+                                )}
                             </div>
 
                             {/* Message */}
@@ -476,7 +468,7 @@ export default function Wishes() {
                 <div className="flex flex-col items-center space-y-4">
                   <CheckCircle className="w-16 h-16 text-emerald-500" />
                   <h3 className="text-2xl font-serif text-gray-800">
-                    Terima Kasih!
+                    Terima Kasih Atas Konfirmasinya!
                   </h3>
                   <p className="text-gray-600">
                     Pesan dan doa Anda telah terkirim. Kami sangat menghargai
@@ -557,6 +549,7 @@ export default function Wishes() {
                         onChange={(e) => setAttendance(e.target.value)}
                         className="sr-only"
                         aria-hidden="true"
+                        required
                       >
                         <option value="">Pilih kehadiran...</option>
                         {options.map((option) => (
@@ -582,13 +575,12 @@ export default function Wishes() {
                         >
                           {attendance
                             ? options.find((opt) => opt.value === attendance)
-                                ?.label
+                              ?.label
                             : "Pilih kehadiran..."}
                         </span>
                         <ChevronDown
-                          className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${
-                            isOpen ? "transform rotate-180" : ""
-                          }`}
+                          className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? "transform rotate-180" : ""
+                            }`}
                         />
                       </button>
 
@@ -615,11 +607,10 @@ export default function Wishes() {
                                   backgroundColor: "rgb(255, 241, 242)",
                                 }}
                                 className={`w-full px-4 py-2.5 text-left transition-colors
-                                        ${
-                                          attendance === option.value
-                                            ? "bg-rose-50 text-rose-600"
-                                            : "text-gray-700 hover:bg-rose-50"
-                                        }`}
+                                        ${attendance === option.value
+                                    ? "bg-rose-50 text-rose-600"
+                                    : "text-gray-700 hover:bg-rose-50"
+                                  }`}
                               >
                                 {option.label}
                               </motion.button>
@@ -641,7 +632,6 @@ export default function Wishes() {
                         value={newWish}
                         onChange={(e) => setNewWish(e.target.value)}
                         className="w-full h-32 p-4 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 resize-none transition-all duration-200"
-                        required
                       />
                     </div>
                   </div>
@@ -656,11 +646,10 @@ export default function Wishes() {
                         scale: createWishMutation.isPending ? 1 : 0.98,
                       }}
                       className={`w-full flex items-center justify-center space-x-2 px-6 py-3 rounded-xl text-white font-medium transition-all duration-200
-                    ${
-                      createWishMutation.isPending
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-rose-500 hover:bg-rose-600"
-                    }`}
+                    ${createWishMutation.isPending
+                          ? "bg-gray-400 cursor-not-allowed"
+                          : "bg-rose-500 hover:bg-rose-600"
+                        }`}
                     >
                       {createWishMutation.isPending ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
