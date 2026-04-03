@@ -11,7 +11,7 @@ import { useState, useRef, useEffect, useCallback } from "react";
  * @returns {Object} Audio state and controls
  */
 export function useAudio(options = {}) {
-  const { src = "/audio/beautiful-in-white.mp3", loop = true, initialVolume = 0.7 } = options;
+  const { src = "/audio/bermuara.mp3", loop = true, initialVolume = 0.7 } = options;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isReady, setIsReady] = useState(false);
@@ -64,29 +64,10 @@ export function useAudio(options = {}) {
       }
     };
 
-    const handleWindowBlur = () => {
-      if (!audioRef.current) return;
-      wasPlayingRef.current = isPlaying;
-      if (isPlaying) {
-        audioRef.current.pause();
-      }
-    };
-
-    const handleWindowFocus = () => {
-      if (!audioRef.current) return;
-      if (wasPlayingRef.current) {
-        audioRef.current.play().catch(console.error);
-      }
-    };
-
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    window.addEventListener("blur", handleWindowBlur);
-    window.addEventListener("focus", handleWindowFocus);
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.removeEventListener("blur", handleWindowBlur);
-      window.removeEventListener("focus", handleWindowFocus);
     };
   }, [isPlaying]);
 

@@ -41,7 +41,7 @@ export default function Gifts() {
               transition={{ delay: 0.2 }}
               className="inline-block text-rose-500 font-medium"
             >
-              Hadiah Pernikahan
+              Gifts
             </motion.span>
 
             <motion.h2
@@ -50,9 +50,18 @@ export default function Gifts() {
               transition={{ delay: 0.3 }}
               className="text-4xl md:text-5xl font-serif text-gray-800"
             >
-              Berikan Hadiah
+              Wedding Gift
             </motion.h2>
 
+               <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="text-gray-500 max-w-md mx-auto"
+              >
+                Berapapun yang Anda berikan, pasti akan sangat bermanfaat bagi kami.
+              </motion.p>
             {/* Decorative Divider */}
             <motion.div
               initial={{ scale: 0 }}

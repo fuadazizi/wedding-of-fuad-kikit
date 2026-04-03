@@ -37,19 +37,16 @@ const config = {
       {
         // First event name
         title: "Akad Nikah",
-        // Event date (format: YYYY-MM-DD)
         date: "2026-06-13",
-        // Start time (format: HH:MM)
         startTime: "08:00",
-        // End time (format: HH:MM)
         endTime: "10:00",
       },
       {
         // Second event name
-        title: "Resepsi Nikah",
+        title: "Acara Walimah",
         date: "2026-06-13",
-        startTime: "11:00",
-        endTime: "17:00",
+        startTime: "10:00",
+        endTime: "15:00",
       }
       // You can add more agenda items with the same format
     ],
@@ -57,9 +54,9 @@ const config = {
     // Background music settings
     audio: {
       // Music file (choose one or replace with your own file)
-      src: "/audio/beautiful-in-white.mp3", // or /audio/nature-sound.mp3
+      src: "/audio/bermuara.mp3", // or /audio/nature-sound.mp3
       // Music title to display
-      title: "Beautiful in White", // or Nature Sound
+      title: "Bermuara", // or Nature Sound
       // Whether music plays automatically when website opens
       autoplay: true,
       // Whether music repeats continuously
@@ -70,9 +67,17 @@ const config = {
     banks: [
       {
         // Bank name
+        bank: "Dana / Gopay / Shopeepay / OVO",
+        // Account number
+        accountNumber: "082117650821",
+        // Account holder name (all uppercase)
+        accountName: "NUR FUAD AZIZI",
+      },
+      {
+        // Bank name
         bank: "Bank Rakyat Indonesia (BRI)",
         // Account number
-        accountNumber: "089501048741536 ",
+        accountNumber: "089501048741536",
         // Account holder name (all uppercase)
         accountName: "NUR FUAD AZIZI",
       },
