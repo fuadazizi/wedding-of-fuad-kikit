@@ -66,27 +66,20 @@ const config = {
     // List of bank accounts for digital envelope/gifts
     banks: [
       {
-        // Bank name
         bank: "Dana / Gopay / Shopeepay / OVO",
-        // Account number
         accountNumber: "082117650821",
-        // Account holder name (all uppercase)
         accountName: "NUR FUAD AZIZI",
       },
       {
-        // Bank name
         bank: "Bank Rakyat Indonesia (BRI)",
-        // Account number
         accountNumber: "089501048741536",
-        // Account holder name (all uppercase)
         accountName: "NUR FUAD AZIZI",
       },
       {
         bank: "Bank Syariah Indonesia (BSI)",
-        accountNumber: "0987654321",
+        accountNumber: "7251433687",
         accountName: "KIKIT ELISA YUNIARTI",
       }
-      // You can add more banks with the same format
     ]
   }
 };

@@ -30,7 +30,7 @@ export const api = {
     return res.json()
   },
 
-  // Stats
+  // Stats — returns { success, data: { attending, not_attending, maybe, total } }
   async getStats(uid) {
     const res = await fetch(`${API_BASE}/api/${uid}/stats`)
     return res.json()
