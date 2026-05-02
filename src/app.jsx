@@ -15,10 +15,10 @@
  */
 
 // src/App.jsx
-import { useState, lazy, Suspense } from "react";
-import { AnimatePresence } from "framer-motion";
+import { useState, useEffect, lazy, Suspense } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Helmet, HelmetProvider } from "react-helmet-async";
-import { Heart } from "lucide-react";
+import { Heart, Lock, Delete } from "lucide-react";
 import { useInvitation } from "@/features/invitation";
 import { useAudio } from "@/hooks/use-audio";
 import staticConfig from "@/config/config";
@@ -34,6 +34,135 @@ const LandingPage = lazy(
 const DevStats = lazy(
   () => import("@/features/wishes/components/dev-stats"),
 );
+
+// ─── Dev-stats PIN gate ───────────────────────────────────────────────────────
+
+/** Hardcoded developer PIN — change this to whatever you want */
+const DEV_PIN = "1401";
+const SESSION_KEY = "dev_stats_unlocked";
+
+function PinGate({ onUnlock }) {
+  const [digits, setDigits] = useState([]);
+  const [shake, setShake] = useState(false);
+  const [hint, setHint] = useState("");
+  const maxLen = DEV_PIN.length;
+
+  const push = (d) => {
+    setHint("");
+    setDigits((prev) => {
+      if (prev.length >= maxLen) return prev;
+      const next = [...prev, d];
+      if (next.length === maxLen) {
+        if (next.join("") === DEV_PIN) {
+          sessionStorage.setItem(SESSION_KEY, "1");
+          setTimeout(onUnlock, 300);
+        } else {
+          setShake(true);
+          setHint("PIN salah. Coba lagi.");
+          setTimeout(() => { setShake(false); setDigits([]); }, 600);
+        }
+      }
+      return next;
+    });
+  };
+
+  const pop = () => {
+    setHint("");
+    setDigits((prev) => prev.slice(0, -1));
+  };
+
+  // Keyboard support
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (/^[0-9]$/.test(e.key)) push(e.key);
+      else if (e.key === "Backspace") pop();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const keys = ["1","2","3","4","5","6","7","8","9","","0","⌫"];
+
+  return (
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="w-full max-w-xs"
+      >
+        {/* Icon */}
+        <div className="flex flex-col items-center mb-8 gap-3">
+          <div className="w-14 h-14 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center">
+            <Lock className="w-6 h-6 text-rose-400" />
+          </div>
+          <div className="text-center">
+            <h1 className="text-white font-bold text-lg tracking-tight">Developer Dashboard</h1>
+            <p className="text-gray-500 text-sm mt-0.5">Masukkan PIN untuk melanjutkan</p>
+          </div>
+        </div>
+
+        {/* Dots */}
+        <motion.div
+          animate={shake ? { x: [0, -8, 8, -8, 8, 0] } : {}}
+          transition={{ duration: 0.4 }}
+          className="flex justify-center gap-4 mb-2"
+        >
+          {Array.from({ length: maxLen }).map((_, i) => (
+            <div
+              key={i}
+              className={`w-3.5 h-3.5 rounded-full border-2 transition-all duration-150 ${
+                i < digits.length
+                  ? "bg-rose-500 border-rose-500 scale-110"
+                  : "bg-transparent border-gray-600"
+              }`}
+            />
+          ))}
+        </motion.div>
+
+        {/* Hint */}
+        <div className="h-5 flex items-center justify-center mb-6">
+          <AnimatePresence>
+            {hint && (
+              <motion.p
+                key={hint}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="text-rose-400 text-xs font-medium"
+              >
+                {hint}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Keypad */}
+        <div className="grid grid-cols-3 gap-3">
+          {keys.map((k, i) => {
+            if (k === "") return <div key={i} />;
+            const isBack = k === "⌫";
+            return (
+              <motion.button
+                key={i}
+                whileTap={{ scale: 0.92 }}
+                onClick={() => isBack ? pop() : push(k)}
+                className={`h-14 rounded-2xl text-lg font-semibold transition-colors select-none ${
+                  isBack
+                    ? "bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-gray-200 flex items-center justify-center"
+                    : "bg-white/8 border border-white/10 text-gray-100 hover:bg-white/15 active:bg-rose-500/20"
+                }`}
+              >
+                {isBack ? <Delete className="w-4 h-4" /> : k}
+              </motion.button>
+            );
+          })}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 /**
  * App component serves as the root of the application.
@@ -57,8 +186,23 @@ function App() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false);
   const { config, isLoading, error } = useInvitation();
 
-  // Hidden developer stats page — accessible at /#/dev-stats
+  // PIN gate state for /#/dev-stats
+  const [devUnlocked, setDevUnlocked] = useState(
+    () => sessionStorage.getItem(SESSION_KEY) === "1",
+  );
+
+  // Always call useAudio unconditionally (Rules of Hooks)
+  const activeConfig = config || staticConfig.data;
+  const audioControls = useAudio({
+    src: activeConfig?.audio?.src || "/audio/fulfilling-humming.mp3",
+    loop: activeConfig?.audio?.loop !== false,
+  });
+
+  // Hidden developer stats page — accessible at /#/dev-stats (PIN protected)
   if (window.location.hash === "#/dev-stats") {
+    if (!devUnlocked) {
+      return <PinGate onUnlock={() => setDevUnlocked(true)} />;
+    }
     return (
       <Suspense fallback={null}>
         <DevStats />
@@ -66,14 +210,6 @@ function App() {
     );
   }
 
-  // Use config from API if available, otherwise fall back to static config
-  const activeConfig = config || staticConfig.data;
-
-  // Initialize audio with config settings
-  const audioControls = useAudio({
-    src: activeConfig?.audio?.src || "/audio/fulfilling-humming.mp3",
-    loop: activeConfig?.audio?.loop !== false,
-  });
 
   // Handle opening the invitation - this is called from a user click,
   // which is the perfect opportunity to start audio (browser policy compliant)
