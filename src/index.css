@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 body, main {
-  background-color: #FDFBF0;
+  /* background-color: #FDFBF0; */
+  background-image: url("assets/images/bg-noflower.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .line-clamp-2 {
@@ -113,4 +117,24 @@ body, main {
 
 .stroke-rose-500 {
   stroke: #D6B456;
+}
+
+.bg-rose-200 {
+    --tw-bg-opacity: 1;
+    background-color: #C48D2E;
+}
+
+.from-rose-500 {
+    --tw-gradient-from: #9ea700 var(--tw-gradient-from-position);
+    --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.via-pink-500 {
+    --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #9ea700 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.to-rose-400 {
+    --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
 }

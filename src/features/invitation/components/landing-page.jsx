@@ -37,22 +37,14 @@ const LandingPage = ({ onOpenInvitation }) => {
 
             {/* Date and Time */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="flex flex-col gap-4 mb-6 sm:mb-8 items-center"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="flex flex-col items-center gap-2 pb-7"
             >
-              <div className="inline-flex flex-col items-center space-y-1 bg-white/80 px-4 sm:px-6 py-2 sm:py-3 rounded-xl">
-                <Calendar className="w-5 h-5 text-rose-400" />
-                <p className="text-gray-700 font-medium">
-                  {formatEventDate(config.date)}
-                </p>
-              </div>
-
-              {/* <div className="inline-flex flex-col items-center space-y-1 bg-white/80 px-4 sm:px-6 py-2 sm:py-3 rounded-xl">
-                <Clock className="w-5 h-5 text-rose-400" />
-                <p className="text-gray-700 font-medium">{config.time}</p>
-              </div> */}
+              <span className="font-serif text-2xl sm:text-3xl tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-rose-500 via-pink-500 to-rose-400">
+                13 · 06 · 2026
+              </span>
             </motion.div>
 
             {/* Couple Names */}

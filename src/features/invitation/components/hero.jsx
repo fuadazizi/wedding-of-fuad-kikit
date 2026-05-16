@@ -129,35 +129,26 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="space-y-6 relative z-10"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-block mx-auto"
-          >
-            <span className="px-4 py-1 text-sm bg-rose-50 text-rose-600 rounded-full border border-rose-200">
-              Catat Tanggal Penting Ini
-            </span>
-          </motion.div>
 
           <div className="space-y-4">
-            <motion.p
+            {/* <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
               className="text-gray-500 font-light italic text-base sm:text-lg"
             >
               InsyaAllah Kami Akan Menikah
-            </motion.p>
+            </motion.p> */}
             <motion.h2
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.6 }}
               className="text-3xl sm:text-5xl font-serif bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-pink-600"
             >
-              {config.groomName} & {config.brideName}
+              F & K
             </motion.h2>
           </div>
+          
 
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -174,19 +165,34 @@ export default function Hero() {
 
               <div className="space-y-6 text-center">
                 <div className="space-y-3">
+                  
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.9 }}
-                    className="flex items-center justify-center space-x-2"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.9, duration: 0.6 }}
+                    className="inline-block mx-auto"
                   >
-                    <Calendar className="w-4 h-4 text-rose-400" />
-                    <span className="text-gray-700 font-medium text-sm sm:text-base">
-                      {formatEventDate(config.date, "full")}
+                    <span className="px-4 py-1 text-sm bg-rose-50 text-rose-600 rounded-full border border-rose-200">
+                      Save the date!
+                    </span>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9, duration: 0.6 }}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="h-px w-6 bg-gradient-to-r from-transparent to-rose-300" />
+                      <Calendar className="w-3.5 h-3.5 text-rose-400" />
+                      <div className="h-px w-6 bg-gradient-to-l from-transparent to-rose-300" />
+                    </div>
+                    <span className="font-serif text-2xl sm:text-3xl tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-rose-500 via-pink-500 to-rose-400">
+                      13 · 06 · 2026
                     </span>
                   </motion.div>
 
-                  <motion.div
+                  {/* <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1 }}
@@ -196,7 +202,7 @@ export default function Hero() {
                     <span className="text-gray-700 font-medium text-sm sm:text-base">
                       {config.time}
                     </span>
-                  </motion.div>
+                  </motion.div> */}
                 </div>
 
                 <div className="flex items-center justify-center gap-3">
