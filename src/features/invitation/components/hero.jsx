@@ -131,22 +131,86 @@ export default function Hero() {
         >
 
           <div className="space-y-4">
-            {/* <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-gray-500 font-light italic text-base sm:text-lg"
+            {/* Decorative label */}
+            <motion.p
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-rose-400/80 font-light"
             >
-              InsyaAllah Kami Akan Menikah
-            </motion.p> */}
-            <motion.h2
-              initial={{ scale: 0.8, opacity: 0 }}
+              The Wedding of
+            </motion.p>
+
+            {/* Monogram block */}
+            <motion.div
+              initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="text-3xl sm:text-5xl font-serif bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-pink-600"
+              transition={{ delay: 0.55, duration: 0.7, ease: "easeOut" }}
+              className="relative flex flex-col items-center gap-1"
             >
-              F & K
-            </motion.h2>
+              {/* Decorative top rule */}
+              <div className="flex items-center gap-3 w-full max-w-[280px] sm:max-w-xs">
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-rose-300/60 to-rose-300/60" />
+                <div className="w-1 h-1 rounded-full bg-rose-300" />
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                <div className="w-1 h-1 rounded-full bg-rose-300" />
+                <div className="flex-1 h-px bg-gradient-to-l from-transparent via-rose-300/60 to-rose-300/60" />
+              </div>
+
+              {/* Initials row */}
+              <div className="flex items-center gap-4 sm:gap-6 py-1">
+                {/* Initial F */}
+                <motion.span
+                  initial={{ x: -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 0.5 }}
+                  className="font-serif text-6xl sm:text-8xl leading-none bg-clip-text text-transparent bg-gradient-to-b from-rose-500 via-rose-600 to-pink-700 drop-shadow-sm select-none"
+                  style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
+                >
+                  F
+                </motion.span>
+
+                {/* Ampersand */}
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ delay: 0.85, duration: 0.5, type: "spring", stiffness: 160 }}
+                  className="flex flex-col items-center gap-0.5"
+                >
+                  <div className="w-px h-3 sm:h-4 bg-gradient-to-b from-transparent to-rose-300/70" />
+                  <span
+                    className="font-serif text-xl sm:text-2xl italic text-rose-400/90 leading-none"
+                    style={{ fontStyle: "italic" }}
+                  >
+                    &amp;
+                  </span>
+                  <div className="w-px h-3 sm:h-4 bg-gradient-to-t from-transparent to-rose-300/70" />
+                </motion.div>
+
+                {/* Initial K */}
+                <motion.span
+                  initial={{ x: 20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 0.5 }}
+                  className="font-serif text-6xl sm:text-8xl leading-none bg-clip-text text-transparent bg-gradient-to-b from-rose-500 via-rose-600 to-pink-700 drop-shadow-sm select-none"
+                  style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
+                >
+                  K
+                </motion.span>
+              </div>
+
+              {/* Decorative bottom rule */}
+              <div className="flex items-center gap-3 w-full max-w-[280px] sm:max-w-xs">
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-rose-300/60 to-rose-300/60" />
+                <div className="w-1 h-1 rounded-full bg-rose-300" />
+                <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />
+                <div className="w-1 h-1 rounded-full bg-rose-300" />
+                <div className="flex-1 h-px bg-gradient-to-l from-transparent via-rose-300/60 to-rose-300/60" />
+              </div>
+
+              {/* Soft glow backdrop */}
+              <div className="absolute inset-0 -z-10 blur-3xl opacity-20 bg-gradient-radial from-rose-300 to-transparent rounded-full" />
+            </motion.div>
           </div>
           
 

@@ -74,7 +74,7 @@ export const formatEventDate = (isoString, format = 'full', isJakartaTime = fals
         'Saturday': 'Sabtu'
     };
 
-    let formatted = date.toLocaleDateString('en-US', formats[format]);
+    let formatted = date.toLocaleDateString('en-GB', formats[format]);
 
     // Handle time format separately
     if (format === 'time') {

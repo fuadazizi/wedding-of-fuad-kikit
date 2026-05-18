@@ -131,10 +131,76 @@ body, main {
 }
 
 .via-pink-500 {
-    --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
-    --tw-gradient-stops: var(--tw-gradient-from), #9ea700 var(--tw-gradient-via-position), var(--tw-gradient-to);
+    /* --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #9ea700 var(--tw-gradient-via-position), var(--tw-gradient-to); */
 }
 
 .to-rose-400 {
     --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
+}
+
+.text-rose-400\/80 {
+    color: rgba(126, 94, 0, 0.8);
+}
+
+.text-rose-400\/90 {
+    color: rgba(126, 94, 0, 0.8);
+}
+
+.via-rose-300\/60 {
+    --tw-gradient-to: rgb(253 164 175 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), rgb(228 235 229) var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.to-rose-300\/60 {
+    --tw-gradient-to: rgb(158 167 0) var(--tw-gradient-to-position);
+}
+
+.text-rose-200 {
+    --tw-text-opacity: 1;
+    color: rgb(153 129 15);
+}
+
+.text-rose-800 {
+    --tw-text-opacity: 1;
+    color: rgb(161 87 4);
+}
+
+.text-rose-300 {
+    --tw-text-opacity: 1;
+    color: rgba(126, 94, 0, 0.8);
+}
+
+.via-rose-500 {
+    --tw-gradient-to: rgb(244 63 94 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), #645627 var(--tw-gradient-via-position), var(--tw-gradient-to);
+}
+
+.from-rose-300 {
+    --tw-gradient-from: #5f6834 var(--tw-gradient-from-position);
+    --tw-gradient-to: rgb(253 164 175 / 0) var(--tw-gradient-to-position);
+    --tw-gradient-stops: var(--tw-gradient-from), rgb(77 97 2);
+}
+
+.bg-rose-50 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(237 244 236);
+}
+
+.border-rose-200 {
+    --tw-border-opacity: 1;
+    border-color: rgb(168 189 146);
+}
+
+.border-pink-200 {
+    --tw-border-opacity: 1;
+    border-color: rgb(251 146 206);
+}
+
+.hover\:bg-rose-200:hover {
+    background-color: rgb(232 253 227) !important;
+}
+
+.hover\:bg-pink-200:hover {
+    background-color: rgb(232 253 227) !important;
 }

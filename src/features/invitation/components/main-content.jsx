@@ -1,4 +1,5 @@
 import Hero from "@/features/invitation/components/hero";
+import { QuranVerse, CoupleInfo } from "@/features/couple";
 import { Events } from "@/features/events";
 import { Location } from "@/features/location";
 import { Wishes } from "@/features/wishes";
@@ -9,6 +10,8 @@ export default function MainContent() {
   return (
     <>
       <Hero />
+      <QuranVerse />
+      <CoupleInfo />
       <Events />
       <Location />
       <Gifts />
@@ -16,3 +19,4 @@ export default function MainContent() {
     </>
   );
 }
+
