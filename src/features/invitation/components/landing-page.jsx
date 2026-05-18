@@ -28,48 +28,83 @@ const LandingPage = ({ onOpenInvitation }) => {
         >
           {/* Card Container */}
           <div className="backdrop-blur-sm bg-white/50 p-6 sm:p-8 md:p-10 rounded-2xl border border-rose-100/50 shadow-xl">
+
+            {/* Date and Time */}
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="flex flex-col items-center gap-2"
+            >
+              <span className="font-serif text-xl sm:text-xl tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-rose-500 via-pink-500 to-rose-400">
+                13 · 06 · 2026
+              </span>
+            </motion.div>
+
             {/* Top Decorative Line */}
-            <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8">
+            <div className="flex items-center justify-center gap-3 my-6">
               <div className="h-px w-12 sm:w-16 bg-rose-200/50" />
               <div className="w-2 h-2 rounded-full bg-rose-300" />
               <div className="h-px w-12 sm:w-16 bg-rose-200/50" />
             </div>
 
-            {/* Date and Time */}
-            <motion.div
+            {/* Wedding Invitation label */}
+            <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col items-center gap-2 pb-7"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-[10px] tracking-[0.2em] uppercase text-gray-400 font-medium text-center mb-1"
             >
-              <span className="font-serif text-2xl sm:text-3xl tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-rose-500 via-pink-500 to-rose-400">
-                13 · 06 · 2026
-              </span>
-            </motion.div>
+              You're Invited to
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-[12] tracking-[0.25em] uppercase text-gray-500 font-medium text-center mb-6"
+            >
+              Wedding Invitation of
+            </motion.p>
 
-            {/* Couple Names */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-center space-y-4"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-center gap-3 mb-1">
-                  <div className="h-px w-8 bg-rose-300/60" />
-                  <p className="text-rose-400 text-sm sm:text-base font-serif italic tracking-widest">
-                    The Wedding of
-                  </p>
-                  <div className="h-px w-8 bg-rose-300/60" />
-                </div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-800 leading-tight">
-                  {config.groomName}
-                  <span className="text-rose-400 mx-2 sm:mx-3">&</span>
-                  {config.brideName}
-                </h1>
-                <div className="h-px w-16 sm:w-24 mx-auto bg-rose-200" />
-              </div>
-            </motion.div>
+            {/* Initials row */}
+            <div className="flex justify-center items-center gap-4 sm:gap-6 py-1">
+              {/* Initial F */}
+              <motion.span
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                className="font-serif text-5xl sm:text-6xl leading-none text-gray-800 drop-shadow-sm select-none"
+                style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
+              >
+                Fuad
+              </motion.span>
+
+              {/* Ampersand */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                className="flex flex-col items-center gap-0.5"
+              >
+                <span
+                  className="font-serif text-xl sm:text-2xl italic text-gray-400 leading-none"
+                  style={{ fontStyle: "italic" }}
+                >
+                  &amp;
+                </span>
+              </motion.div>
+
+              {/* Initial K */}
+              <motion.span
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8 }}
+                className="font-serif text-5xl sm:text-6xl leading-none text-gray-800 drop-shadow-sm select-none"
+                style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
+              >
+                Kikit
+              </motion.span>
+            </div>
 
             {/* Open Invitation Button */}
             <motion.div
@@ -109,7 +144,6 @@ const LandingPage = ({ onOpenInvitation }) => {
               tempat dan akses.
             </motion.p>
           </div>
-
         </motion.div>
       </div>
     </motion.div>

@@ -219,14 +219,6 @@ export default function Wishes() {
             transition={{ duration: 0.8 }}
             className="text-center space-y-4 mb-16"
           >
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-block text-rose-500 font-medium"
-            >
-              Kirimkan Doa dan Harapan Terbaik Anda
-            </motion.span>
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -234,7 +226,7 @@ export default function Wishes() {
               transition={{ delay: 0.3 }}
               className="text-4xl md:text-5xl font-serif text-gray-800"
             >
-              Pesan dan Doa
+              Wedding Wishes
             </motion.h2>
 
             {/* Decorative Divider */}
@@ -590,7 +582,7 @@ export default function Wishes() {
               wishes &&
               wishes.filter((w) => w?.message).length > 0 && (
                 <AnimatePresence>
-                  <div className="max-h-96 overflow-y-auto py-2 space-y-4">
+                  <div className="max-h-96 overflow-y-auto py-2 space-y-4 scrollbar-hide">
                     {wishes
                       .filter((w) => w.message)
                       .map((wish, index) => (

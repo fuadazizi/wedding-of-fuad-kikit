@@ -92,19 +92,31 @@ export default function CoupleInfo() {
         className="w-full max-w-lg"
       >
         {/* Section heading */}
-        <div className="text-center mb-10">
+        <div className="text-center mb-6">
           <p className="text-xs font-medium tracking-widest text-rose-400 uppercase mb-2">
-            Mempelai
+            the Groom & the Bride
           </p>
-          <h2 className="text-2xl sm:text-3xl font-serif text-gray-800">
-            Dua Hati, Satu Tujuan
-          </h2>
           <div className="flex items-center justify-center gap-3 mt-3">
             <div className="h-px w-12 bg-rose-200" />
             <Heart className="w-4 h-4 text-rose-400" fill="currentColor" />
             <div className="h-px w-12 bg-rose-200" />
           </div>
         </div>
+
+        {/* Invitation description */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-center mb-10 px-2"
+        >
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+            Dengan penuh rasa syukur dan kebahagiaan, kami mengundang{" "}
+            <span className="font-semibold text-gray-800">Bapak/Ibu/Saudara/i</span>{" "}
+            untuk hadir dan memberikan doa restu dalam acara pernikahan kami.
+          </p>
+        </motion.div>
 
         {/* Cards */}
         <div className="grid grid-cols-2 gap-6 sm:gap-10">

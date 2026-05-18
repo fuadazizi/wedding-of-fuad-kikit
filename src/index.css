@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 body, main {
+  font-family: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  
   /* background-color: #FDFBF0; */
   background-image: url("assets/images/bg-noflower.jpg");
   background-repeat: no-repeat;
@@ -15,6 +17,15 @@ body, main {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE & Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
 }
 
 @layer base {
@@ -124,9 +135,13 @@ body, main {
     background-color: #C48D2E;
 }
 
+.bg-rose-300 {
+  background-color: #a46f11;
+}
+
 .from-rose-500 {
-    --tw-gradient-from: #9ea700 var(--tw-gradient-from-position);
-    --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
+    --tw-gradient-from: #a76700 var(--tw-gradient-from-position);
+    --tw-gradient-to: #a76700 var(--tw-gradient-to-position);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -136,7 +151,7 @@ body, main {
 }
 
 .to-rose-400 {
-    --tw-gradient-to: #9ea700 var(--tw-gradient-to-position);
+    --tw-gradient-to: #a77200 var(--tw-gradient-to-position);
 }
 
 .text-rose-400\/80 {
@@ -153,7 +168,11 @@ body, main {
 }
 
 .to-rose-300\/60 {
-    --tw-gradient-to: rgb(158 167 0) var(--tw-gradient-to-position);
+    --tw-gradient-to: rgb(167, 125, 0) var(--tw-gradient-to-position);
+}
+
+.to-rose-300 {
+    --tw-gradient-to: rgb(210, 158, 1) var(--tw-gradient-to-position);
 }
 
 .text-rose-200 {

@@ -35,14 +35,6 @@ export default function Gifts() {
             transition={{ duration: 0.8 }}
             className="text-center space-y-4 mb-16"
           >
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 }}
-              className="inline-block text-rose-500 font-medium"
-            >
-              Gifts
-            </motion.span>
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}

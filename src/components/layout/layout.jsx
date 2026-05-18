@@ -63,7 +63,23 @@ const Layout = ({ children, audioControls }) => {
           </motion.button>
         )}
 
-        <main className="relative h-full w-full pb-[100px]">{children}</main>
+        <main className="relative h-full w-full pb-[100px]">
+          {children}
+
+          {/* Footer Credit */}
+          <motion.footer
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center py-6 border-t border-gray-100 bg-white"
+          >
+            <p className="text-[11px] text-gray-600 tracking-wide">
+              Developed with love ❤️ by{" "}
+              <span className="font-medium text-gray-500">Fuad</span>
+            </p>
+          </motion.footer>
+        </main>
         <BottomBar />
 
         {/* Music Info Toast */}

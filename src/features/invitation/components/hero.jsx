@@ -61,67 +61,11 @@ export default function Hero() {
     );
   };
 
-  const FloatingHearts = () => {
-    const [hearts] = useState(() =>
-      [...Array(8)].map((_, i) => ({
-        size: Math.floor(Math.random() * 2) + 8,
-        color:
-          i % 3 === 0
-            ? "text-rose-400"
-            : i % 3 === 1
-              ? "text-pink-400"
-              : "text-red-400",
-        initialX:
-          typeof window !== "undefined" ? Math.random() * window.innerWidth : 0,
-        animateX:
-          typeof window !== "undefined" ? Math.random() * window.innerWidth : 0,
-      })),
-    );
-
-    return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {hearts.map((heart, i) => (
-          <motion.div
-            key={i}
-            initial={{
-              opacity: 0,
-              scale: 0,
-              x: heart.initialX,
-              y: typeof window !== "undefined" ? window.innerHeight : 0,
-            }}
-            animate={{
-              opacity: [0, 1, 1, 0],
-              scale: [0, 1, 1, 0.5],
-              x: heart.animateX,
-              y: -100,
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              delay: i * 0.8,
-              ease: "easeOut",
-            }}
-            className="absolute"
-          >
-            <Heart
-              className={heart.color}
-              style={{
-                width: `${heart.size * 4}px`,
-                height: `${heart.size * 4}px`,
-              }}
-              fill="currentColor"
-            />
-          </motion.div>
-        ))}
-      </div>
-    );
-  };
-
   return (
     <>
       <section
         id="home"
-        className="min-h-screen flex flex-col items-center justify-center px-4 py-16 sm:py-20 text-center relative overflow-hidden"
+        className="min-h-screen flex flex-col items-center justify-center px-4 pt-16 pb-4 text-center relative overflow-hidden"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -129,7 +73,6 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="space-y-6 relative z-10"
         >
-
           <div className="space-y-4">
             {/* Decorative label */}
             <motion.p
@@ -157,47 +100,21 @@ export default function Hero() {
                 <div className="flex-1 h-px bg-gradient-to-l from-transparent via-rose-300/60 to-rose-300/60" />
               </div>
 
-              {/* Initials row */}
-              <div className="flex items-center gap-4 sm:gap-6 py-1">
-                {/* Initial F */}
-                <motion.span
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 0.5 }}
-                  className="font-serif text-6xl sm:text-8xl leading-none bg-clip-text text-transparent bg-gradient-to-b from-rose-500 via-rose-600 to-pink-700 drop-shadow-sm select-none"
-                  style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
-                >
-                  F
-                </motion.span>
-
-                {/* Ampersand */}
-                <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.85, duration: 0.5, type: "spring", stiffness: 160 }}
-                  className="flex flex-col items-center gap-0.5"
-                >
-                  <div className="w-px h-3 sm:h-4 bg-gradient-to-b from-transparent to-rose-300/70" />
-                  <span
-                    className="font-serif text-xl sm:text-2xl italic text-rose-400/90 leading-none"
-                    style={{ fontStyle: "italic" }}
-                  >
-                    &amp;
-                  </span>
-                  <div className="w-px h-3 sm:h-4 bg-gradient-to-t from-transparent to-rose-300/70" />
-                </motion.div>
-
-                {/* Initial K */}
-                <motion.span
-                  initial={{ x: 20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: 0.7, duration: 0.5 }}
-                  className="font-serif text-6xl sm:text-8xl leading-none bg-clip-text text-transparent bg-gradient-to-b from-rose-500 via-rose-600 to-pink-700 drop-shadow-sm select-none"
-                  style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
-                >
-                  K
-                </motion.span>
-              </div>
+              {/* Couple Names */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-center space-y-4"
+              >
+                <div className="space-y-2">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-800 leading-tight py-4">
+                    {config.groomName}
+                    <span className="text-rose-400 mx-2 sm:mx-3">&</span>
+                    {config.brideName}
+                  </h1>
+                </div>
+              </motion.div>
 
               {/* Decorative bottom rule */}
               <div className="flex items-center gap-3 w-full max-w-[280px] sm:max-w-xs">
@@ -212,7 +129,6 @@ export default function Hero() {
               <div className="absolute inset-0 -z-10 blur-3xl opacity-20 bg-gradient-radial from-rose-300 to-transparent rounded-full" />
             </motion.div>
           </div>
-          
 
           <motion.div
             initial={{ y: 20, opacity: 0 }}
@@ -229,7 +145,6 @@ export default function Hero() {
 
               <div className="space-y-6 text-center">
                 <div className="space-y-3">
-                  
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
@@ -304,25 +219,6 @@ export default function Hero() {
 
           <CountdownTimer targetDate={config.date} />
 
-          <div className="pt-6 relative">
-            <FloatingHearts />
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 5, -5, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Heart
-                className="w-10 sm:w-12 h-10 sm:h-12 text-rose-500 mx-auto"
-                fill="currentColor"
-              />
-            </motion.div>
-          </div>
         </motion.div>
       </section>
     </>

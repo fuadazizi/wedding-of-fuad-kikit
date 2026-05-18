@@ -19,15 +19,6 @@ export default function Location() {
             viewport={{ once: true }}
             className="text-center space-y-4 mb-16"
           >
-            <motion.span
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              viewport={{ once: true }}
-              className="inline-block text-rose-500 font-medium"
-            >
-              Lokasi Acara
-            </motion.span>
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -36,7 +27,7 @@ export default function Location() {
               viewport={{ once: true }}
               className="text-4xl md:text-5xl font-serif text-gray-800"
             >
-              Lokasi
+              Event Location
             </motion.h2>
 
             {/* Decorative Divider */}
