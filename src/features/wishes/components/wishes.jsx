@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
+import DecorativeCard from "@/components/ui/decorative-card";
 // import Marquee from "@/components/ui/marquee";
 import {
   Calendar,
@@ -21,6 +22,7 @@ import { formatEventDate } from "@/lib/format-event-date";
 import { fetchWishes, createWish } from "@/services/api";
 import { MOCK_WISHES } from "@/services/mock-wishes";
 import { getGuestName } from "@/lib/invitation-storage";
+import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
 
 const IS_STATIC_MODE = import.meta.env.VITE_STATIC_MODE === "true";
 
@@ -28,6 +30,7 @@ export default function Wishes() {
   // const { uid } = useInvitation();
   const uid = "fuad-kikit";
   const queryClient = useQueryClient();
+  const [sectionRef, isSectionAnimated] = useScrollReanimate(0.25);
   const [showConfetti, setShowConfetti] = useState(false);
   const [newWish, setNewWish] = useState("");
   const [guestName, setGuestName] = useState("");
@@ -211,29 +214,25 @@ export default function Wishes() {
     <>
       <section id="wishes" className="min-h-screen relative overflow-hidden">
         {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
-        <div className="container mx-auto px-4 py-10 relative z-10">
+        <div className="container mx-auto px-4 py-10 relative z-9">
           {/* Section Header */}
           <motion.div
+            ref={sectionRef}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8 }}
             className="text-center space-y-4 mb-16"
           >
 
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl font-serif text-gray-800"
-            >
+            <h2 className="text-4xl md:text-5xl font-serif text-gray-800">
               Wedding Wishes
-            </motion.h2>
+            </h2>
 
             {/* Decorative Divider */}
             <motion.div
               initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.4 }}
+              animate={isSectionAnimated ? { scale: 1 } : { scale: 0 }}
+              transition={{ delay: isSectionAnimated ? 0.4 : 0 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -340,15 +339,14 @@ export default function Wishes() {
             )}
           </AnimatePresence>
 
-          {/* Wishes Form */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
+            animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: isSectionAnimated ? 0.5 : 0 }}
             className="max-w-2xl mx-auto"
           >
             {hasSubmittedWish ? (
-              <div className="backdrop-blur-sm bg-white/80 p-8 rounded-2xl border border-emerald-100 shadow-lg text-center">
+              <DecorativeCard noOrnaments={true} className="text-center p-8 border-emerald-100">
                 <div className="flex flex-col items-center space-y-4">
                   <CheckCircle className="w-16 h-16 text-emerald-500" />
                   <h3 className="text-2xl font-serif text-gray-800">
@@ -362,10 +360,10 @@ export default function Wishes() {
                     Setiap tamu hanya dapat mengirim satu pesan.
                   </p>
                 </div>
-              </div>
+              </DecorativeCard>
             ) : (
               <form onSubmit={handleSubmitWish} className="relative">
-                <div className="backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
+                <DecorativeCard noOrnaments={true} className="text-left p-6">
                   {/* Error Message */}
                   <AnimatePresence>
                     {errorMessage && (
@@ -547,7 +545,7 @@ export default function Wishes() {
                       </span>
                     </motion.button>
                   </div>
-                </div>
+                </DecorativeCard>
               </form>
             )}
           </motion.div>
@@ -597,11 +595,8 @@ export default function Wishes() {
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          {/* Background gradient */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-rose-100/60 to-pink-100/60 rounded-2xl transform transition-transform group-hover:scale-[1.02] duration-300" />
-
                           {/* Card content */}
-                          <div className="relative h-full backdrop-blur-sm bg-white/90 p-4 rounded-2xl border border-rose-100/50 shadow-md flex flex-col">
+                          <DecorativeCard className="h-full p-4 shadow-md flex flex-col" noOrnaments={true}>
                             {/* Header */}
                             <div className="flex items-center space-x-3 mb-3">
                               {/* Avatar */}
@@ -647,7 +642,7 @@ export default function Wishes() {
                                 {wish.message}
                               </p>
                             </div>
-                          </div>
+                          </DecorativeCard>
                         </motion.div>
                       ))}
                   </div>

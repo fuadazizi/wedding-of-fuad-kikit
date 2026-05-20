@@ -2,35 +2,35 @@ import EventCards from "@/features/events/components/events-card";
 import { useConfig } from "@/features/invitation/hooks/use-config";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
+import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
 
 export default function Events() {
   const config = useConfig(); // Use hook to get config from API or fallback to static
+  const [ref, isAnimated] = useScrollReanimate(0.25);
 
   return (
     <>
       {/* Event Section */}
-      <section id="event" className="relative overflow-hidden">
+      <section id="event" className="relative overflow-hidden z-10">
         <motion.div
+          ref={ref}
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={isAnimated ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.8 }}
           className="relative z-10 container mx-auto px-4 py-10"
         >
           {/* Section Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8 }}
             className="text-center space-y-4 mb-16"
           >
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
+              animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: isAnimated ? 0.3 : 0 }}
               className="text-4xl md:text-5xl font-serif text-gray-800 leading-tight"
             >
               Walimah
@@ -38,9 +38,8 @@ export default function Events() {
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
+              animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: isAnimated ? 0.4 : 0 }}
               className="text-gray-500 max-w-md mx-auto"
             >
               Kami turut mengundang Anda untuk merayakan hari istimewa kami sebagai awal
@@ -50,9 +49,8 @@ export default function Events() {
             {/* Decorative Line */}
             <motion.div
               initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
+              animate={isAnimated ? { scale: 1 } : { scale: 0 }}
+              transition={{ delay: isAnimated ? 0.5 : 0 }}
               className="flex items-center justify-center gap-4 mt-6"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -66,12 +64,11 @@ export default function Events() {
           {/* Events Grid */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.8, delay: isAnimated ? 0.6 : 0 }}
             className="max-w-2xl mx-auto"
           >
-            <EventCards events={config.agenda} />
+            <EventCards events={config.agenda} title={config.title} gmaps={config.gmaps_name} />
           </motion.div>
         </motion.div>
       </section>

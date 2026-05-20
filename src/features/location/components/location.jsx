@@ -2,29 +2,32 @@ import { useConfig } from "@/features/invitation/hooks/use-config";
 import { Clock, MapPin, CalendarCheck, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { formatEventDate } from "@/lib/format-event-date";
+import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
+
+import DecorativeCard from "@/components/ui/decorative-card";
 
 export default function Location() {
   const config = useConfig(); // Use hook to get config from API or fallback to static
+  const [ref, isAnimated] = useScrollReanimate(0.25);
 
   return (
     <>
       {/* Location section */}
       <section id="location" className="min-h-screen relative overflow-hidden">
-        <div className="container mx-auto px-4 py-10 relative z-10">
+        <div className="container mx-auto px-4 py-10 relative z-9">
           {/* Section Header */}
           <motion.div
+            ref={ref}
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
             className="text-center space-y-4 mb-16"
           >
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              viewport={{ once: true }}
+              animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ delay: isAnimated ? 0.3 : 0 }}
               className="text-4xl md:text-5xl font-serif text-gray-800"
             >
               Event Location
@@ -33,9 +36,8 @@ export default function Location() {
             {/* Decorative Divider */}
             <motion.div
               initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ delay: 0.4 }}
-              viewport={{ once: true }}
+              animate={isAnimated ? { scale: 1 } : { scale: 0 }}
+              transition={{ delay: isAnimated ? 0.4 : 0 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -49,12 +51,11 @@ export default function Location() {
             {/* Venue Details */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
               className="space-y-6"
             >
-              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+              <DecorativeCard noOrnaments={true} className="text-left">
                 <h3 className="text-2xl font-serif text-gray-800 mb-6">
                   {config.location}
                 </h3>
@@ -72,15 +73,14 @@ export default function Location() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </DecorativeCard>
             </motion.div>
 
             {/* Map Container */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
               className="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg border-8 border-white"
             >
               <iframe
@@ -102,12 +102,21 @@ export default function Location() {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                viewport={{ once: true }}
                 className="w-full flex items-center justify-center gap-1.5 bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-sm"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span className="font-semibold">View Map</span>
               </motion.a>
+              {config.maps_notes && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-xs text-gray-500 italic text-center mt-3"
+                >
+                  *Note: {config.maps_notes}
+                </motion.p>
+              )}
             </div>
           </div>
         </div>

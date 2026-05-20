@@ -1,4 +1,5 @@
 import Hero from "@/features/invitation/components/hero";
+import Closing from "@/features/invitation/components/closing";
 import { QuranVerse, CoupleInfo } from "@/features/couple";
 import { Events } from "@/features/events";
 import { Location } from "@/features/location";
@@ -16,6 +17,7 @@ export default function MainContent() {
       <Location />
       <Gifts />
       <Wishes />
+      <Closing />
     </>
   );
 }

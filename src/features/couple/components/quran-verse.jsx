@@ -2,7 +2,11 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, Heart } from "lucide-react";
 import { useState } from "react";
 
+import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
+
 export default function QuranVerse() {
+  const [ref, isAnimated] = useScrollReanimate(0.25);
+
   const FloatingHearts = () => {
     const [hearts] = useState(() =>
       [...Array(8)].map((_, i) => ({
@@ -60,11 +64,11 @@ export default function QuranVerse() {
   };
 
   return (
-    <section className="px-4 py-12 flex flex-col items-center">
+    <section id="quranverse" className="relative z-10 px-4 py-12 flex flex-col items-center">
       <motion.div
+        ref={ref}
         initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
+        animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         className="w-full max-w-lg"
       >
@@ -88,10 +92,9 @@ export default function QuranVerse() {
           </span>
 
           {/* Arabic text */}
-          <motion.p
+          {/* <motion.p
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            animate={isAnimated ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
             className="font-serif text-2xl sm:text-3xl leading-loose text-rose-800 mb-6 mt-2"
             dir="rtl"
@@ -100,20 +103,19 @@ export default function QuranVerse() {
             وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا
             لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً
             ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
-          </motion.p>
+          </motion.p> */}
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-rose-100" />
+            <div className="flex-1 h-px bg-rose-200" />
             <span className="text-rose-300 text-xs">✦</span>
-            <div className="flex-1 h-px bg-rose-100" />
+            <div className="flex-1 h-px bg-rose-200" />
           </div>
 
           {/* Translation */}
           <motion.p
             initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
             transition={{ delay: 0.4, duration: 0.7 }}
             className="text-gray-600 text-sm sm:text-base leading-relaxed italic"
           >
@@ -126,13 +128,18 @@ export default function QuranVerse() {
           {/* Source */}
           <motion.p
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            animate={isAnimated ? { opacity: 1 } : { opacity: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
             className="mt-4 text-xs text-rose-400 font-medium tracking-widest uppercase"
           >
             QS. Ar-Rūm: 21
           </motion.p>
+
+          <div className="flex items-center gap-3 my-5">
+            <div className="flex-1 h-px bg-rose-200" />
+            <span className="text-rose-300 text-xs">✦</span>
+            <div className="flex-1 h-px bg-rose-200" />
+          </div>
 
           {/* Bottom ornamental corners */}
           <span

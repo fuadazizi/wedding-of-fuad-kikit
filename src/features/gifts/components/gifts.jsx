@@ -1,17 +1,14 @@
 import { useConfig } from "@/features/invitation/hooks/use-config";
 import { motion } from "framer-motion";
 import { Copy, Gift, CheckCircle, Wallet, Building2 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import DecorativeCard from "@/components/ui/decorative-card";
+import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
 
 export default function Gifts() {
   const config = useConfig(); // Use hook to get config from API or fallback to static
   const [copiedAccount, setCopiedAccount] = useState(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  // Set animation to run once on component mount
-  useEffect(() => {
-    setHasAnimated(true);
-  }, []);
+  const [ref, isAnimated] = useScrollReanimate(0.25);
 
   const copyToClipboard = (text, bank) => {
     navigator.clipboard.writeText(text);
@@ -27,74 +24,33 @@ export default function Gifts() {
   return (
     <>
       <section id="gifts" className="min-h-screen relative overflow-hidden">
-        <div className="container mx-auto px-4 py-10 relative z-10">
+        <div className="container mx-auto px-4 py-10 relative z-9">
           {/* Section Header */}
           <motion.div
+            ref={ref}
             initial={{ opacity: 0, y: 20 }}
-            animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
+            animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8 }}
-            className="text-center space-y-4 mb-16"
+            className="text-center space-y-4 mb-8"
           >
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.3 }}
-              className="text-4xl md:text-5xl font-serif text-gray-800"
-            >
+            <h2 className="text-4xl md:text-5xl font-serif text-gray-800">
               Wedding Gift
-            </motion.h2>
+            </h2>
 
-               <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="text-gray-500 max-w-md mx-auto"
-              >
-                Berapapun yang Anda berikan, pasti akan sangat bermanfaat bagi kami.
-              </motion.p>
+            <p className="text-gray-500 max-w-md mx-auto">
+              Berapapun yang Anda berikan, pasti akan sangat bermanfaat bagi kami.
+            </p>
+
             {/* Decorative Divider */}
             <motion.div
               initial={{ scale: 0 }}
-              animate={hasAnimated ? { scale: 1 } : {}}
-              transition={{ delay: 0.4 }}
+              animate={isAnimated ? { scale: 1 } : { scale: 0 }}
+              transition={{ delay: isAnimated ? 0.4 : 0 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
               <Gift className="w-5 h-5 text-rose-400" />
               <div className="h-[1px] w-12 bg-rose-200" />
-            </motion.div>
-
-            {/* Message Container */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={hasAnimated ? { opacity: 1 } : {}}
-              transition={{ delay: 0.5 }}
-              className="space-y-4 max-w-md mx-auto"
-            >
-
-              {/* Arabic Dua */}
-              <div className="space-y-2">
-                <p className="font-arabic text-lg text-gray-800">
-                  جزاكم الله خيرا وبارك الله فيكم
-                </p>
-                <p className="text-gray-600 italic text-sm">
-                  Jazakumullahu khairan, Barakallah fiikum
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Optional: Additional Decorative Element */}
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={hasAnimated ? { scale: 1 } : {}}
-              transition={{ delay: 0.6 }}
-              className="flex items-center justify-center gap-3 pt-4"
-            >
-              <div className="h-px w-8 bg-rose-200/50" />
-              <div className="w-1.5 h-1.5 rounded-full bg-rose-300" />
-              <div className="h-px w-8 bg-rose-200/50" />
             </motion.div>
           </motion.div>
 
@@ -104,15 +60,14 @@ export default function Gifts() {
               <motion.div
                 key={account.accountNumber}
                 initial={{ opacity: 0, y: 20 }}
-                animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2 * index + 0.7 }}
-                className="relative group"
+                animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ delay: isAnimated ? 0.1 * index : 0 }}
+                className="relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-2xl transform transition-transform group-hover:scale-105 duration-300" />
-                <div className="relative backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
+                <DecorativeCard noOrnaments={true} className="text-left">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 rounded-lg bg-white p-2 shadow-sm">
+                      <div className="w-12 h-12 rounded-lg bg-white p-2 shadow-sm flex items-center justify-center">
                         <Building2 className="w-full h-full text-rose-500" />
                       </div>
                       <div>
@@ -129,7 +84,7 @@ export default function Gifts() {
 
                   <div className="mt-4">
                     <div className="flex items-center justify-between bg-gray-50/80 px-4 py-3 rounded-lg">
-                      <p className="font-mono text-gray-700">
+                      <p className="font-semibold text-gray-700">
                         {account.accountNumber}
                       </p>
                       <motion.button
@@ -151,10 +106,43 @@ export default function Gifts() {
                       </motion.button>
                     </div>
                   </div>
-                </div>
+                </DecorativeCard>
               </motion.div>
             ))}
           </div>
+
+          {/* Bottom Message */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-4"
+          >
+            {/* Optional: Additional Decorative Element */}
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={isAnimated ? { scale: 1 } : { scale: 0 }}
+              transition={{ delay: isAnimated ? 0.6 : 0 }}
+              className="flex items-center justify-center gap-3 pt-4"
+            >
+              <div className="h-px w-8 bg-rose-200/50" />
+              <div className="w-1.5 h-1.5 rounded-full bg-rose-300" />
+              <div className="h-px w-8 bg-rose-200/50" />
+            </motion.div>
+
+            {/* Message Container */}
+            <div className="space-y-4 max-w-md mx-auto">
+              {/* Arabic Dua */}
+              <div className="space-y-2">
+                <p className="font-arabic text-lg text-gray-800">
+                  جزاكم الله خيرا وبارك الله فيكم
+                </p>
+                <p className="text-gray-600 italic text-sm">
+                  Jazakumullahu khairan, Barakallah fiikum
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </>

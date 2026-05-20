@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Music, PauseCircle, PlayCircle } from "lucide-react";
 import { useConfig } from "@/features/invitation/hooks/use-config";
 import BottomBar from "@/components/layout/bottom-bar";
+import FallingElements from "@/components/ui/falling-elements";
+
+import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
 
 /**
  * Layout component that wraps the main invitation content.
@@ -17,6 +20,7 @@ import BottomBar from "@/components/layout/bottom-bar";
 const Layout = ({ children, audioControls }) => {
   const config = useConfig();
   const [showToast, setShowToast] = useState(false);
+  const [footerRef, isFooterAnimated] = useScrollReanimate(0.25);
 
   const { isPlaying, toggle } = audioControls || {};
 
@@ -42,6 +46,7 @@ const Layout = ({ children, audioControls }) => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
+        <FallingElements />
         {/* Music Control Button with Status Indicator */}
         {toggle && (
           <motion.button
@@ -68,9 +73,9 @@ const Layout = ({ children, audioControls }) => {
 
           {/* Footer Credit */}
           <motion.footer
+            ref={footerRef}
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            animate={isFooterAnimated ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center py-6 border-t border-gray-100 bg-white"
           >

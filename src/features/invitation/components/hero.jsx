@@ -109,9 +109,9 @@ export default function Hero() {
               >
                 <div className="space-y-2">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-gray-800 leading-tight py-4">
-                    {config.groomName}
-                    <span className="text-rose-400 mx-2 sm:mx-3">&</span>
                     {config.brideName}
+                    <span className="text-rose-400 mx-2 sm:mx-3">&</span>
+                    {config.groomName}
                   </h1>
                 </div>
               </motion.div>

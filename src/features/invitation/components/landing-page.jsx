@@ -68,7 +68,7 @@ const LandingPage = ({ onOpenInvitation }) => {
 
             {/* Initials row */}
             <div className="flex justify-center items-center gap-4 sm:gap-6 py-1">
-              {/* Initial F */}
+              {/* Bride Initial */}
               <motion.span
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -76,7 +76,7 @@ const LandingPage = ({ onOpenInvitation }) => {
                 className="font-serif text-5xl sm:text-6xl leading-none text-gray-800 drop-shadow-sm select-none"
                 style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
               >
-                Fuad
+                {config.brideName}
               </motion.span>
 
               {/* Ampersand */}
@@ -94,7 +94,7 @@ const LandingPage = ({ onOpenInvitation }) => {
                 </span>
               </motion.div>
 
-              {/* Initial K */}
+              {/* Groom Initial */}
               <motion.span
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -102,7 +102,7 @@ const LandingPage = ({ onOpenInvitation }) => {
                 className="font-serif text-5xl sm:text-6xl leading-none text-gray-800 drop-shadow-sm select-none"
                 style={{ fontVariant: "small-caps", letterSpacing: "0.02em" }}
               >
-                Kikit
+                {config.groomName}
               </motion.span>
             </div>
 

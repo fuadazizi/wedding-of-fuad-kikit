@@ -1,5 +1,4 @@
-// EventCard.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calendar,
@@ -14,6 +13,27 @@ import {
 import { formatEventDate } from '@/lib/format-event-date';
 
 const Modal = ({ isOpen, onClose, children }) => {
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, scrollY);
+      };
+    }
+  }, [isOpen]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -44,7 +64,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 const CalendarButton = ({ icon: Icon, label, onClick, className = "" }) => (
   <motion.button
     onClick={onClick}
-    className={`flex items-center space-x-3 w-full p-4 rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors ${className}`}
+    className={`flex items-center space-x-3 w-full p-4 rounded-xl border border-gray-300 hover:bg-gray-50 transition-colors ${className}`}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
   >
@@ -83,10 +103,15 @@ const CalendarButton = ({ icon: Icon, label, onClick, className = "" }) => (
  *
  * @returns {JSX.Element} A JSX element representing the event card.
  */
-const SingleEventCard = ({ eventData }) => {
+import DecorativeCard from "@/components/ui/decorative-card";
+import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
+
+const SingleEventCard = ({ eventData, title, gmaps }) => {
   const [showCalendarModal, setShowCalendarModal] = useState(false);
+  const [ref, isAnimated] = useScrollReanimate(0.25);
 
   const googleCalendarLink = () => {
+    console.log(eventData);
     const startDate = new Date(`${eventData.date}T${eventData.startTime}:00`);
     const endDate = new Date(`${eventData.date}T${eventData.endTime}:00`);
 
@@ -94,7 +119,7 @@ const SingleEventCard = ({ eventData }) => {
       return date.toISOString().replace(/-|:|\.\d+/g, '');
     };
 
-    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventData.title)}&dates=${formatDate(startDate)}/${formatDate(endDate)}&details=${encodeURIComponent(eventData.description)}&location=${encodeURIComponent(eventData.location)}&ctz=${eventData.timeZone}`;
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDate(startDate)}/${formatDate(endDate)}&location=${encodeURIComponent(gmaps)}&ctz=${eventData.timeZone}`;
   };
 
   const generateICSContent = () => {
@@ -106,16 +131,15 @@ const SingleEventCard = ({ eventData }) => {
     };
 
     return `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-URL:${window.location.href}
-DTSTART:${formatICSDate(startDate)}
-DTEND:${formatICSDate(endDate)}
-SUMMARY:${eventData.title}
-DESCRIPTION:${eventData.description}
-LOCATION:${eventData.location}
-END:VEVENT
-END:VCALENDAR`;
+          VERSION:2.0
+          BEGIN:VEVENT
+          URL:${window.location.href}
+          DTSTART:${formatICSDate(startDate)}
+          DTEND:${formatICSDate(endDate)}
+          SUMMARY:${eventData.title}
+          LOCATION:${gmaps}
+          END:VEVENT
+          END:VCALENDAR`;
   };
 
   const downloadICSFile = () => {
@@ -123,7 +147,7 @@ END:VCALENDAR`;
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `${eventData.title.toLowerCase().replace(/ /g, '-')}.ics`;
+    link.download = `${title.toLowerCase().replace(/ /g, '-')}.ics`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -132,36 +156,34 @@ END:VCALENDAR`;
   return (
     <div className="relative">
       <motion.div
-        className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4"
+        ref={ref}
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-semibold text-gray-800">{eventData.title.split(' - ')[0]}</h3>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="text-rose-500 hover:text-rose-600 transition-colors"
-            onClick={() => setShowCalendarModal(true)}
-          >
-            <CalendarPlus className="w-5 h-5" />
-          </motion.button>
-        </div>
-        <div className="space-y-3 text-gray-600">
-          <div className="flex items-center space-x-3">
-            <Calendar className="w-5 h-5 text-rose-500" />
-            <span>{formatEventDate(eventData.date)}</span>
+        <DecorativeCard noOrnaments={true} className="space-y-4 text-left">
+          <div className="flex justify-between items-center">
+            <h3 className="text-xl font-semibold text-gray-800">{eventData.title.split(' - ')[0]}</h3>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="text-rose-500 hover:text-rose-600 transition-colors"
+              onClick={() => setShowCalendarModal(true)}
+            >
+              <CalendarPlus className="w-5 h-5" />
+            </motion.button>
           </div>
-          <div className="flex items-center space-x-3">
-            <Clock className="w-5 h-5 text-rose-500" />
-            <span>{eventData.startTime?.substring(0, 5) || eventData.startTime} - {eventData.endTime?.substring(0, 5) || eventData.endTime} WIB</span>
+          <div className="space-y-3 text-gray-600">
+            <div className="flex items-center space-x-3">
+              <Calendar className="w-5 h-5 text-rose-500" />
+              <span>{formatEventDate(eventData.date)}</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Clock className="w-5 h-5 text-rose-500" />
+              <span>{eventData.startTime?.substring(0, 5) || eventData.startTime} - {eventData.endTime?.substring(0, 5) || eventData.endTime} WIB</span>
+            </div>
           </div>
-          {/* <div className="flex items-center space-x-3">
-            <MapPin className="w-5 h-5 text-rose-500" />
-            <span>{eventData.location}</span>
-          </div> */}
-        </div>
+        </DecorativeCard>
       </motion.div>
 
       <Modal
@@ -207,11 +229,11 @@ END:VCALENDAR`;
 };
 
 // Main EventCards component that handles multiple events
-const EventCards = ({ events }) => {
+const EventCards = ({ events, title, gmaps }) => {
   return (
     <div className="space-y-4">
       {events.map((event, index) => (
-        <SingleEventCard key={index} eventData={event} />
+        <SingleEventCard key={index} eventData={event} title={title} gmaps={gmaps} />
       ))}
     </div>
   );
