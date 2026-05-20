@@ -100,7 +100,7 @@ function useScrollVelocity() {
  * - Scrolling down: leaves drift upward slightly (as if caught in updraft)
  * - Scrolling up: leaves fall faster (as if pushed by downdraft)
  */
-export default function FallingElements({ count = 10 }) {
+export default function FallingElements({ count = 30 }) {
   const [dimensions, setDimensions] = useState({ width: 430, height: 1000 });
   const scrollVelocity = useScrollVelocity();
   const containerRef = useRef(null);
@@ -213,7 +213,7 @@ export default function FallingElements({ count = 10 }) {
     //   - multiplier (3.0): how strongly scroll affects leaves. Higher = more dramatic
     //   - clamp min (-2.5): allows leaves to actually reverse direction and rise
     //   - clamp max (3.0): max speedup when scrolling up (4x normal = 1 + 3.0)
-    const SCROLL_SENSITIVITY = 3.0;
+    const SCROLL_SENSITIVITY = 0; // Set to 3.0 to re-enable scroll reactivity
     const scrollInfluence = Math.max(-2.5, Math.min(3.0, -sv * SCROLL_SENSITIVITY));
 
     const viewportHeight = dimensions.height;
