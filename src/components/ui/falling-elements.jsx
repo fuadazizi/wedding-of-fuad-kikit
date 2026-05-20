@@ -100,7 +100,7 @@ function useScrollVelocity() {
  * - Scrolling down: leaves drift upward slightly (as if caught in updraft)
  * - Scrolling up: leaves fall faster (as if pushed by downdraft)
  */
-export default function FallingElements({ count = 30 }) {
+export default function FallingElements({ count = 10 }) {
   const [dimensions, setDimensions] = useState({ width: 430, height: 1000 });
   const scrollVelocity = useScrollVelocity();
   const containerRef = useRef(null);
@@ -290,27 +290,30 @@ export default function FallingElements({ count = 30 }) {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] pointer-events-none z-10 overflow-hidden"
+      className="fixed inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] pointer-events-none overflow-hidden"
+      style={{ zIndex: 5 }}
     >
-      {elements.map((el, i) => {
-        const Comp = el.Component;
-        return (
-          <div
-            key={el.id}
-            ref={(node) => { elementRefs.current[i] = node; }}
-            style={{
-              position: "absolute",
-              left: `${el.left}%`,
-              width: el.size,
-              height: el.size,
-              opacity: 0,
-              willChange: "transform, opacity",
-            }}
-          >
-            <Comp className={el.color} style={{ width: "100%", height: "100%" }} />
-          </div>
-        );
-      })}
-    </div>
+      {
+        elements.map((el, i) => {
+          const Comp = el.Component;
+          return (
+            <div
+              key={el.id}
+              ref={(node) => { elementRefs.current[i] = node; }}
+              style={{
+                position: "absolute",
+                left: `${el.left}%`,
+                width: el.size,
+                height: el.size,
+                opacity: 0,
+                willChange: "transform, opacity",
+              }}
+            >
+              <Comp className={el.color} style={{ width: "100%", height: "100%" }} />
+            </div>
+          );
+        })
+      }
+    </div >
   );
 }

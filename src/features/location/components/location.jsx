@@ -14,7 +14,7 @@ export default function Location() {
     <>
       {/* Location section */}
       <section id="location" className="min-h-screen relative overflow-hidden">
-        <div className="container mx-auto px-4 py-10 relative z-9">
+        <div className="container mx-auto px-4 py-10 relative z-10">
           {/* Section Header */}
           <motion.div
             ref={ref}
