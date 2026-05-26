@@ -23,7 +23,7 @@ export default function Gifts() {
 
   return (
     <>
-      <section id="gifts" className="min-h-screen relative overflow-hidden">
+      <section id="gifts" className="min-h-[100dvh] relative overflow-hidden flex flex-col justify-center">
         <div className="container mx-auto px-4 py-10 relative z-10">
           {/* Section Header */}
           <motion.div
@@ -45,7 +45,7 @@ export default function Gifts() {
             <motion.div
               initial={{ scale: 0 }}
               animate={isAnimated ? { scale: 1 } : { scale: 0 }}
-              transition={{ delay: isAnimated ? 0.4 : 0 }}
+              transition={{ delay: isAnimated ? 0.6 : 0, duration: 0.6 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -61,7 +61,7 @@ export default function Gifts() {
                 key={account.accountNumber}
                 initial={{ opacity: 0, y: 20 }}
                 animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ delay: isAnimated ? 0.1 * index : 0 }}
+                transition={{ delay: isAnimated ? 0.2 * index + 0.8 : 0, duration: 0.6 }}
                 className="relative"
               >
                 <DecorativeCard noOrnaments={true} className="text-left">
@@ -122,7 +122,7 @@ export default function Gifts() {
             <motion.div
               initial={{ scale: 0 }}
               animate={isAnimated ? { scale: 1 } : { scale: 0 }}
-              transition={{ delay: isAnimated ? 0.6 : 0 }}
+              transition={{ delay: isAnimated ? 0.8 : 0, duration: 0.6 }}
               className="flex items-center justify-center gap-3 pt-4"
             >
               <div className="h-px w-8 bg-rose-200/50" />

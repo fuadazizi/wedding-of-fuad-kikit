@@ -15,7 +15,7 @@ function PersonCard({ fullName, shortName, parentName, ig, text, side, delay = 0
       ref={ref}
       initial={{ opacity: 0, y: 32 }}
       animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 32 }}
-      transition={{ duration: 0.7, delay: isAnimated ? delay : 0, ease: "easeOut" }}
+      transition={{ duration: 1.0, delay: isAnimated ? delay + 0.3 : 0, ease: "easeOut" }}
       className="flex flex-col items-center gap-4"
     >
       {/* Photo avatar */}
@@ -83,17 +83,17 @@ export default function CoupleInfo() {
   const [ref, isAnimated] = useScrollReanimate(0.25);
 
   return (
-    <section id="couple" className="relative px-4 py-10 sm:py-14 flex flex-col items-center z-10">
+    <section id="couple" className="relative px-4 py-10 sm:py-14 flex flex-col justify-center items-center z-10 min-h-[100dvh]">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 16 }}
         animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-        transition={{ duration: 0.6 }}
+        transition={{ delay: 0.8, duration: 1 }}
         className="w-full max-w-lg"
       >
         {/* Section heading */}
         <div className="text-center mb-6">
-          <p className="text-xs font-medium tracking-widest text-rose-400 uppercase mb-2">
+          <p className="text-xl font-medium tracking-widest text-rose-400 uppercase mb-2">
             the Bride & the Groom
           </p>
           <div className="flex items-center justify-center gap-3 mt-3">
@@ -107,7 +107,7 @@ export default function CoupleInfo() {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-          transition={{ duration: 0.6, delay: isAnimated ? 0.1 : 0 }}
+          transition={{ delay: 1.0, duration: 1 }}
           className="text-center mb-10 px-2"
         >
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -144,7 +144,7 @@ export default function CoupleInfo() {
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={isAnimated ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-          transition={{ delay: isAnimated ? 0.4 : 0, duration: 0.5, type: "spring" }}
+          transition={{ delay: 1.4, duration: 1, type: "spring" }}
           className="flex flex-col items-center mt-10 gap-2"
         >
           <div className="flex items-center gap-3">

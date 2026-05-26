@@ -212,7 +212,7 @@ export default function Wishes() {
   };
   return (
     <>
-      <section id="wishes" className="min-h-screen relative overflow-hidden">
+      <section id="wishes" className="min-h-[100dvh] relative overflow-hidden flex flex-col justify-center py-10">
         {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
         <div className="container mx-auto px-4 py-10 relative z-10">
           {/* Section Header */}
@@ -232,7 +232,7 @@ export default function Wishes() {
             <motion.div
               initial={{ scale: 0 }}
               animate={isSectionAnimated ? { scale: 1 } : { scale: 0 }}
-              transition={{ delay: isSectionAnimated ? 0.4 : 0 }}
+              transition={{ delay: isSectionAnimated ? 0.7 : 0, duration: 0.6 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -342,7 +342,7 @@ export default function Wishes() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ delay: isSectionAnimated ? 0.5 : 0 }}
+            transition={{ delay: isSectionAnimated ? 0.9 : 0, duration: 0.6 }}
             className="max-w-2xl mx-auto"
           >
             {hasSubmittedWish ? (
@@ -412,7 +412,7 @@ export default function Wishes() {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
+                      transition={{ delay: 0.3, duration: 0.6 }}
                       className="space-y-2 relative"
                       ref={dropdownRef}
                     >
@@ -589,7 +589,7 @@ export default function Wishes() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -20 }}
-                          transition={{ delay: index * 0.1 }}
+                          transition={{ delay: index * 0.2 + 1.2, duration: 0.6 }}
                           className="group relative w-full cursor-pointer"
                           onClick={() => setSelectedWish(wish)}
                           whileHover={{ scale: 1.02 }}

@@ -28,7 +28,7 @@ export default function Closing() {
   const [ref, isAnimated] = useScrollReanimate(0.25);
 
   return (
-    <section className="px-6 py-10 flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-transparent to-rose-50/20">
+    <section className="min-h-[100dvh] px-6 py-10 flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-transparent to-rose-50/20">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 30 }}
@@ -55,7 +55,7 @@ export default function Closing() {
 
         {/* Closing Greeting */}
         <div className="space-y-2 pt-2">
-          <p className="text-rose-500/90 font-serif italic text-sm tracking-wide">
+          <p className="text-rose-400 font-serif italic text-sm tracking-wide">
             {"Wassalamu'alaikum Warahmatullahi Wabarakatuh"}
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function Closing() {
         <div className="space-y-2">
           <p className="text-gray-500 text-xs tracking-widest uppercase">Kami yang berbahagia,</p>
           <h3 className="text-3xl sm:text-4xl font-serif text-gray-800 py-2">
-            {config.brideName} <span className="text-rose-400 font-sans">&</span> {config.groomName}
+            {config.brideName} <span className="text-rose-400">&</span> {config.groomName}
           </h3>
           <p className="text-gray-400 text-xs sm:text-sm">Beserta Keluarga</p>
         </div>

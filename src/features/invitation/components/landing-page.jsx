@@ -52,7 +52,7 @@ const LandingPage = ({ onOpenInvitation }) => {
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
               className="text-[10px] tracking-[0.2em] uppercase text-gray-400 font-medium text-center mb-1"
             >
               You're Invited to
@@ -60,7 +60,7 @@ const LandingPage = ({ onOpenInvitation }) => {
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
               className="text-[12] tracking-[0.25em] uppercase text-gray-500 font-medium text-center mb-6"
             >
               Wedding Invitation of
@@ -110,7 +110,7 @@ const LandingPage = ({ onOpenInvitation }) => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
               className="mt-6 sm:mt-8"
             >
               <motion.button
@@ -136,7 +136,7 @@ const LandingPage = ({ onOpenInvitation }) => {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
+              transition={{ delay: 1.5, duration: 0.6 }}
               className="mt-5 text-center text-xs text-gray-400 leading-relaxed px-2 italic"
             >
               🔒 Undangan ini bersifat pribadi. Mohon tidak menyebarluaskan

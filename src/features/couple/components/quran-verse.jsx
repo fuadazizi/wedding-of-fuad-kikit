@@ -10,22 +10,20 @@ export default function QuranVerse() {
   const FloatingHearts = () => {
     const [hearts] = useState(() =>
       [...Array(8)].map((_, i) => ({
-        size: Math.floor(Math.random() * 2) + 8,
+        size: Math.floor(Math.random() * 2) + 4,
         color:
           i % 3 === 0
             ? "text-rose-400"
             : i % 3 === 1
               ? "text-pink-400"
               : "text-red-400",
-        initialX:
-          typeof window !== "undefined" ? Math.random() * window.innerWidth : 0,
-        animateX:
-          typeof window !== "undefined" ? Math.random() * window.innerWidth : 0,
+        initialX: Math.random() * 60 - 30,
+        animateX: Math.random() * 100 - 50,
       })),
     );
 
     return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none flex justify-center items-center">
         {hearts.map((heart, i) => (
           <motion.div
             key={i}
@@ -33,13 +31,13 @@ export default function QuranVerse() {
               opacity: 0,
               scale: 0,
               x: heart.initialX,
-              y: typeof window !== "undefined" ? window.innerHeight : 0,
+              y: 20,
             }}
             animate={{
               opacity: [0, 1, 1, 0],
               scale: [0, 1, 1, 0.5],
               x: heart.animateX,
-              y: -100,
+              y: -80,
             }}
             transition={{
               duration: 4,
@@ -52,8 +50,8 @@ export default function QuranVerse() {
             <Heart
               className={heart.color}
               style={{
-                width: `${heart.size * 4}px`,
-                height: `${heart.size * 4}px`,
+                width: `${heart.size * 3}px`,
+                height: `${heart.size * 3}px`,
               }}
               fill="currentColor"
             />
@@ -64,12 +62,12 @@ export default function QuranVerse() {
   };
 
   return (
-    <section id="quranverse" className="relative z-10 px-4 py-12 flex flex-col items-center">
+    <section id="quranverse" className="relative z-10 px-4 py-12 flex flex-col items-center justify-center min-h-[100dvh]">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 24 }}
         animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
+        transition={{ delay: 0.8, duration: 0.7, ease: "easeOut" }}
         className="w-full max-w-lg"
       >
         {/* Decorative top line */}
@@ -91,20 +89,6 @@ export default function QuranVerse() {
             ❧
           </span>
 
-          {/* Arabic text */}
-          {/* <motion.p
-            initial={{ opacity: 0 }}
-            animate={isAnimated ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="font-serif text-2xl sm:text-3xl leading-loose text-rose-800 mb-6 mt-2"
-            dir="rtl"
-            lang="ar"
-          >
-            وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا
-            لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةً
-            ۗاِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ
-          </motion.p> */}
-
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
             <div className="flex-1 h-px bg-rose-200" />
@@ -116,7 +100,7 @@ export default function QuranVerse() {
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-            transition={{ delay: 0.4, duration: 0.7 }}
+            transition={{ delay: 0.7, duration: 0.7 }}
             className="text-gray-600 text-sm sm:text-base leading-relaxed italic"
           >
             "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan
@@ -129,7 +113,7 @@ export default function QuranVerse() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={isAnimated ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
+            transition={{ delay: 1.0, duration: 0.6 }}
             className="mt-4 text-xs text-rose-400 font-medium tracking-widest uppercase"
           >
             QS. Ar-Rūm: 21
@@ -164,7 +148,12 @@ export default function QuranVerse() {
         </div>
       </motion.div>
 
-      <div className="pt-6 relative">
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="pt-6 relative"
+      >
         <FloatingHearts />
         <motion.div
           animate={{
@@ -173,6 +162,7 @@ export default function QuranVerse() {
           }}
           transition={{
             duration: 2,
+            delay: 0.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
@@ -182,7 +172,7 @@ export default function QuranVerse() {
             fill="currentColor"
           />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

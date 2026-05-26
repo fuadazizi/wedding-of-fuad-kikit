@@ -65,7 +65,7 @@ export default function Hero() {
     <>
       <section
         id="home"
-        className="min-h-screen flex flex-col items-center justify-center px-4 pt-16 pb-4 text-center relative overflow-hidden"
+        className="min-h-screen flex flex-col items-center justify-center px-4 text-center relative overflow-hidden"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ export default function Hero() {
             <motion.p
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
               className="text-[10px] sm:text-xs uppercase tracking-[0.35em] text-rose-400/80 font-light"
             >
               The Wedding of
@@ -89,7 +89,7 @@ export default function Hero() {
             <motion.div
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.55, duration: 0.7, ease: "easeOut" }}
+              transition={{ delay: 0.8, duration: 0.7, ease: "easeOut" }}
               className="relative flex flex-col items-center gap-1"
             >
               {/* Decorative top rule */}
@@ -105,7 +105,7 @@ export default function Hero() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.8, duration: 0.8 }}
                 className="text-center space-y-4"
               >
                 <div className="space-y-2">
@@ -134,7 +134,7 @@ export default function Hero() {
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             className="relative w-full mx-auto"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-rose-50/50 to-white/50 backdrop-blur-md rounded-2xl" />
@@ -149,7 +149,7 @@ export default function Hero() {
                   <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ delay: 0.9, duration: 0.6 }}
+                    transition={{ delay: 1.4, duration: 0.6 }}
                     className="inline-block mx-auto"
                   >
                     <span className="px-4 py-1 text-sm bg-rose-50 text-rose-600 rounded-full border border-rose-200">
@@ -159,7 +159,7 @@ export default function Hero() {
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.9, duration: 0.6 }}
+                    transition={{ delay: 1.4, duration: 0.6 }}
                     className="flex flex-col items-center gap-2"
                   >
                     <div className="flex items-center gap-3">
@@ -194,7 +194,7 @@ export default function Hero() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 1.1 }}
+                  transition={{ delay: 1.8, duration: 0.8 }}
                   className="space-y-2"
                 >
                   <p className="text-gray-500 font-serif italic text-sm">

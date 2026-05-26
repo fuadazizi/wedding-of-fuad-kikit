@@ -77,7 +77,8 @@ const Layout = ({ children, audioControls }) => {
             initial={{ opacity: 0 }}
             animate={isFooterAnimated ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center py-6 border-t border-gray-100 bg-white"
+            className="relative text-center py-6 border-t border-gray-100 bg-white"
+            style={{ zIndex: 10 }}
           >
             <p className="text-[11px] text-gray-600 tracking-wide">
               Developed with love ❤️ by{" "}

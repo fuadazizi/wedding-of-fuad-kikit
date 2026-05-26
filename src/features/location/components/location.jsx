@@ -13,7 +13,7 @@ export default function Location() {
   return (
     <>
       {/* Location section */}
-      <section id="location" className="min-h-screen relative overflow-hidden">
+      <section id="location" className="min-h-[100dvh] relative overflow-hidden flex flex-col justify-center">
         <div className="container mx-auto px-4 py-10 relative z-10">
           {/* Section Header */}
           <motion.div
@@ -27,7 +27,7 @@ export default function Location() {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: isAnimated ? 0.3 : 0 }}
+              transition={{ delay: isAnimated ? 0.5 : 0, duration: 0.6 }}
               className="text-4xl md:text-5xl font-serif text-gray-800"
             >
               Event Location
@@ -37,7 +37,7 @@ export default function Location() {
             <motion.div
               initial={{ scale: 0 }}
               animate={isAnimated ? { scale: 1 } : { scale: 0 }}
-              transition={{ delay: isAnimated ? 0.4 : 0 }}
+              transition={{ delay: isAnimated ? 0.7 : 0, duration: 0.6 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -111,7 +111,7 @@ export default function Location() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
                   className="text-xs text-gray-500 italic text-center mt-3"
                 >
                   *Note: {config.maps_notes}

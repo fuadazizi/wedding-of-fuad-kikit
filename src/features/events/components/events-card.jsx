@@ -159,7 +159,7 @@ const SingleEventCard = ({ eventData, title, gmaps }) => {
         ref={ref}
         initial={{ opacity: 0, y: 20 }}
         animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
       >
         <DecorativeCard noOrnaments={true} className="space-y-4 text-left">
           <div className="flex justify-between items-center">

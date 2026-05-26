@@ -232,7 +232,7 @@ export default function FallingElements({ count = 30 }) {
 
       // Fall speed modified by scroll
       // Base speed + scroll-influenced offset
-      const effectiveSpeed = el.baseSpeed * (1 + scrollInfluence);
+      const effectiveSpeed = el.baseSpeed;
       state.y += effectiveSpeed * clampedDt;
 
       // Sway
@@ -240,7 +240,7 @@ export default function FallingElements({ count = 30 }) {
       const swayX = el.swayAmplitude * Math.sin(el.swayFrequency * state.swayTime);
 
       // Rotation — also affected by scroll for extra realism
-      const rotateMultiplier = 1 + scrollInfluence * 0.3;
+      const rotateMultiplier = 1;
       state.rotateAngle += el.rotateSpeed * clampedDt * Math.max(0.3, rotateMultiplier);
 
       // Opacity: fade in near top, fade out near bottom
