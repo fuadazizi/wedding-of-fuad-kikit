@@ -83,7 +83,7 @@ export default function CoupleInfo() {
   const [ref, isAnimated] = useScrollReanimate(0.25);
 
   return (
-    <section id="couple" className="relative px-4 py-10 sm:py-14 flex flex-col justify-center items-center z-10 min-h-[100dvh]">
+    <section id="couple" className="relative px-4 py-10 sm:py-14 flex flex-col justify-center items-center z-10">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 16 }}

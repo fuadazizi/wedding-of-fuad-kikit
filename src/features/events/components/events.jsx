@@ -11,7 +11,7 @@ export default function Events() {
   return (
     <>
       {/* Event Section */}
-      <section id="event" className="relative overflow-hidden z-10 min-h-[100dvh] flex flex-col justify-center">
+      <section id="event" className="relative overflow-hidden z-10 flex flex-col justify-center">
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}

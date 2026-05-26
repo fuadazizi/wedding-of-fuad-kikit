@@ -62,7 +62,7 @@ export default function QuranVerse() {
   };
 
   return (
-    <section id="quranverse" className="relative z-10 px-4 py-12 flex flex-col items-center justify-center min-h-[100dvh]">
+    <section id="quranverse" className="relative z-10 px-4 py-12 flex flex-col items-center justify-center">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 24 }}

@@ -23,7 +23,7 @@ export default function Gifts() {
 
   return (
     <>
-      <section id="gifts" className="min-h-[100dvh] relative overflow-hidden flex flex-col justify-center">
+      <section id="gifts" className="relative overflow-hidden flex flex-col justify-center">
         <div className="container mx-auto px-4 py-10 relative z-10">
           {/* Section Header */}
           <motion.div

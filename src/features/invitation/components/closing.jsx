@@ -28,7 +28,7 @@ export default function Closing() {
   const [ref, isAnimated] = useScrollReanimate(0.25);
 
   return (
-    <section className="min-h-[100dvh] px-6 py-10 flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-transparent to-rose-50/20">
+    <section className="px-6 py-10 flex flex-col items-center justify-center relative overflow-hidden bg-gradient-to-b from-transparent to-rose-50/20">
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 30 }}

@@ -13,7 +13,7 @@ export default function Location() {
   return (
     <>
       {/* Location section */}
-      <section id="location" className="min-h-[100dvh] relative overflow-hidden flex flex-col justify-center">
+      <section id="location" className="relative overflow-hidden flex flex-col justify-center">
         <div className="container mx-auto px-4 py-10 relative z-10">
           {/* Section Header */}
           <motion.div

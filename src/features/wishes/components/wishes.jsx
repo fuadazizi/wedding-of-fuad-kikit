@@ -212,7 +212,7 @@ export default function Wishes() {
   };
   return (
     <>
-      <section id="wishes" className="min-h-[100dvh] relative overflow-hidden flex flex-col justify-center py-10">
+      <section id="wishes" className="relative overflow-hidden flex flex-col justify-center py-10">
         {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
         <div className="container mx-auto px-4 py-10 relative z-10">
           {/* Section Header */}
@@ -402,7 +402,7 @@ export default function Wishes() {
                         id="guest-name"
                         name="guestName"
                         autoComplete="name"
-                        placeholder="Masukan nama kamu..."
+                        placeholder="Masukkan nama kamu..."
                         value={guestName}
                         onChange={(e) => setGuestName(e.target.value)}
                         className="w-full px-4 py-2.5 rounded-xl border bg-white/50 border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-gray-700 placeholder-gray-400"
@@ -551,7 +551,11 @@ export default function Wishes() {
           </motion.div>
 
           {/* Wishes List */}
-          <div className="max-w-2xl mx-auto space-y-6 mt-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: isSectionAnimated ? 1.3 : 0, duration: 0.6 }}
+            className="max-w-2xl mx-auto space-y-6 mt-12">
             {isLoading && (
               <div className="flex justify-center items-center py-12">
                 <Loader2 className="w-8 h-8 text-rose-500 animate-spin" />
@@ -648,7 +652,7 @@ export default function Wishes() {
                   </div>
                 </AnimatePresence>
               )}
-          </div>
+          </motion.div>
         </div>
       </section>
     </>
