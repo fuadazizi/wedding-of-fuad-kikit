@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Music, PauseCircle, PlayCircle } from "lucide-react";
+import { Music, PauseCircle, PlayCircle, Volume2, Volume1, VolumeX } from "lucide-react";
 import { useConfig } from "@/features/invitation/hooks/use-config";
 import BottomBar from "@/components/layout/bottom-bar";
 import FallingElements from "@/components/ui/falling-elements";
@@ -21,8 +21,9 @@ const Layout = ({ children, audioControls }) => {
   const config = useConfig();
   const [showToast, setShowToast] = useState(false);
   const [footerRef, isFooterAnimated] = useScrollReanimate(0.25);
+  const [showSlider, setShowSlider] = useState(false);
 
-  const { isPlaying, toggle } = audioControls || {};
+  const { isPlaying, toggle, volume = 0.7, changeVolume } = audioControls || {};
 
   // Show toast when audio starts playing
   useEffect(() => {
@@ -47,25 +48,92 @@ const Layout = ({ children, audioControls }) => {
         transition={{ duration: 0.5 }}
       >
         <FallingElements />
-        {/* Music Control Button with Status Indicator */}
+        {/* Music Control Capsule with Status Indicator */}
         {toggle && (
-          <motion.button
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={toggle}
-            className="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm p-3 rounded-full shadow-lg border border-rose-100/50"
+          <motion.div
+            layout
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-md px-3 py-2 rounded-full shadow-md border border-rose-100/40 flex items-center gap-2 text-rose-500"
+            onMouseEnter={() => setShowSlider(true)}
+            onMouseLeave={() => setShowSlider(false)}
           >
-            {isPlaying ? (
-              <div className="relative">
-                <PauseCircle className="w-6 h-6 text-rose-500" />
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              </div>
-            ) : (
-              <PlayCircle className="w-6 h-6 text-rose-500" />
-            )}
-          </motion.button>
+            {/* Volume Control Group (Placed on the left) */}
+            <motion.div layout className="flex items-center gap-1.5">
+              {/* Slider (Animated slide-out) */}
+              <AnimatePresence>
+                {showSlider && (
+                  <motion.div
+                    initial={{ width: 0, opacity: 0 }}
+                    animate={{ width: 70, opacity: 1 }}
+                    exit={{ width: 0, opacity: 0 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className="overflow-hidden flex items-center"
+                  >
+                    <input
+                      type="range"
+                      min="0"
+                      max="1"
+                      step="0.05"
+                      value={volume}
+                      onChange={(e) => {
+                        changeVolume(parseFloat(e.target.value));
+                      }}
+                      className="w-16 h-1 bg-rose-100 rounded-lg appearance-none cursor-pointer accent-rose-500 focus:outline-none"
+                      style={{
+                        background: `linear-gradient(to right, #f43f5e 0%, #f43f5e ${volume * 100}%, #ffe4e6 ${volume * 100}%, #ffe4e6 100%)`
+                      }}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <motion.button
+                layout="position"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowSlider(!showSlider);
+                }}
+                className="flex items-center justify-center focus:outline-none text-rose-400 hover:text-rose-600 transition-colors"
+                aria-label="Volume settings"
+              >
+                {volume === 0 ? (
+                  <VolumeX className="w-5 h-5" />
+                ) : volume < 0.4 ? (
+                  <Volume1 className="w-5 h-5" />
+                ) : (
+                  <Volume2 className="w-5 h-5" />
+                )}
+              </motion.button>
+            </motion.div>
+
+            {/* Visual Separator */}
+            <motion.span
+              layout="position"
+              className="w-[1px] h-4 bg-rose-200/50"
+            />
+
+            {/* Play/Pause Button (Placed on the right) */}
+            <motion.button
+              layout="position"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={toggle}
+              className="flex items-center justify-center focus:outline-none"
+              aria-label={isPlaying ? "Pause music" : "Play music"}
+            >
+              {isPlaying ? (
+                <div className="relative flex items-center justify-center">
+                  <PauseCircle className="w-6 h-6 text-rose-500" />
+                  <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                </div>
+              ) : (
+                <PlayCircle className="w-6 h-6 text-rose-500" />
+              )}
+            </motion.button>
+          </motion.div>
         )}
 
         <main className="relative h-full w-full pb-[100px]">

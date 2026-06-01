@@ -33,7 +33,7 @@ export default function Closing() {
         ref={ref}
         initial={{ opacity: 0, y: 30 }}
         animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
         className="w-full max-w-md text-center space-y-8 relative z-10"
       >
         {/* Top Ornament */}

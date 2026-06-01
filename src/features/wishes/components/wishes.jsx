@@ -220,7 +220,7 @@ export default function Wishes() {
             ref={sectionRef}
             initial={{ opacity: 0, y: 20 }}
             animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 1 }}
             className="text-center space-y-4 mb-16"
           >
 
@@ -232,7 +232,7 @@ export default function Wishes() {
             <motion.div
               initial={{ scale: 0 }}
               animate={isSectionAnimated ? { scale: 1 } : { scale: 0 }}
-              transition={{ delay: isSectionAnimated ? 0.7 : 0, duration: 0.6 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -342,7 +342,7 @@ export default function Wishes() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ delay: isSectionAnimated ? 0.9 : 0, duration: 0.6 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
             className="max-w-2xl mx-auto"
           >
             {hasSubmittedWish ? (
@@ -554,7 +554,7 @@ export default function Wishes() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ delay: isSectionAnimated ? 1.3 : 0, duration: 0.6 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
             className="max-w-2xl mx-auto space-y-6 mt-12">
             {isLoading && (
               <div className="flex justify-center items-center py-12">

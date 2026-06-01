@@ -44,65 +44,11 @@ const Leaf2 = ({ className, ...props }) => (
 const COMPONENTS = [Petal1, Petal2, Leaf1, Leaf2];
 
 /**
- * Tracks scroll velocity with smoothing.
- * Returns a ref whose .current is the current smoothed scroll velocity.
- * Negative = scrolling up, Positive = scrolling down.
- */
-function useScrollVelocity() {
-  const velocityRef = useRef(0);
-  const lastScrollY = useRef(0);
-  const lastTime = useRef(performance.now());
-
-  useEffect(() => {
-    lastScrollY.current = window.scrollY;
-
-    const handleScroll = () => {
-      const now = performance.now();
-      const dt = now - lastTime.current;
-      if (dt < 1) return; // Avoid division by zero on rapid fire
-
-      const dy = window.scrollY - lastScrollY.current;
-      const rawVelocity = dy / dt; // px/ms
-
-      // Exponential smoothing for organic feel
-      velocityRef.current = velocityRef.current * 0.7 + rawVelocity * 0.3;
-
-      lastScrollY.current = window.scrollY;
-      lastTime.current = now;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    // Decay velocity toward zero when not scrolling
-    let decayRaf;
-    const decay = () => {
-      velocityRef.current *= 0.95;
-      if (Math.abs(velocityRef.current) < 0.001) {
-        velocityRef.current = 0;
-      }
-      decayRaf = requestAnimationFrame(decay);
-    };
-    decayRaf = requestAnimationFrame(decay);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(decayRaf);
-    };
-  }, []);
-
-  return velocityRef;
-}
-
-/**
  * FallingElements Component
  * Generates continuous falling flower petals and leaves within the page container.
- * Leaves respond to scroll velocity for a natural, wind-like effect:
- * - Scrolling down: leaves drift upward slightly (as if caught in updraft)
- * - Scrolling up: leaves fall faster (as if pushed by downdraft)
  */
-export default function FallingElements({ count = 10 }) {
+export default function FallingElements({ count = 20 }) {
   const [dimensions, setDimensions] = useState({ width: 430, height: 1000 });
-  const scrollVelocity = useScrollVelocity();
   const containerRef = useRef(null);
   const elementRefs = useRef([]);
   const animationState = useRef([]);
@@ -200,22 +146,6 @@ export default function FallingElements({ count = 10 }) {
     // Clamp dt to avoid huge jumps if tab was inactive
     const clampedDt = Math.min(dt, 0.1);
 
-    // scrollVelocity.current is in px/ms. Convert to a multiplier.
-    // Positive velocity = scrolling down → leaves should resist (slow down / drift up)
-    // Negative velocity = scrolling up → leaves should speed up
-    const sv = scrollVelocity.current;
-
-    // Scroll influence: maps velocity to a speed multiplier.
-    // Positive sv (scroll down) → negative influence → leaves slow down or rise
-    // Negative sv (scroll up) → positive influence → leaves fall faster
-    //
-    // Tuning knobs:
-    //   - multiplier (3.0): how strongly scroll affects leaves. Higher = more dramatic
-    //   - clamp min (-2.5): allows leaves to actually reverse direction and rise
-    //   - clamp max (3.0): max speedup when scrolling up (4x normal = 1 + 3.0)
-    const SCROLL_SENSITIVITY = 0; // Set to 3.0 to re-enable scroll reactivity
-    const scrollInfluence = Math.max(-2.5, Math.min(3.0, -sv * SCROLL_SENSITIVITY));
-
     const viewportHeight = dimensions.height;
 
     elements.forEach((el, i) => {
@@ -275,7 +205,7 @@ export default function FallingElements({ count = 10 }) {
     });
 
     rafRef.current = requestAnimationFrame(animate);
-  }, [elements, dimensions.height, scrollVelocity]);
+  }, [elements, dimensions.height]);
 
   useEffect(() => {
     lastFrameTime.current = performance.now();

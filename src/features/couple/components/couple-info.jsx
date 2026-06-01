@@ -88,7 +88,7 @@ export default function CoupleInfo() {
         ref={ref}
         initial={{ opacity: 0, y: 16 }}
         animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-        transition={{ delay: 0.8, duration: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
         className="w-full max-w-lg"
       >
         {/* Section heading */}

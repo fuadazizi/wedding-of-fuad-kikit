@@ -67,7 +67,7 @@ export default function QuranVerse() {
         ref={ref}
         initial={{ opacity: 0, y: 24 }}
         animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ delay: 0.8, duration: 0.7, ease: "easeOut" }}
+        transition={{ delay: 0.5, duration: 0.7, ease: "easeOut" }}
         className="w-full max-w-lg"
       >
         {/* Decorative top line */}
@@ -151,7 +151,7 @@ export default function QuranVerse() {
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
         className="pt-6 relative"
       >
         <FloatingHearts />

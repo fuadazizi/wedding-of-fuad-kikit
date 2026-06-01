@@ -20,14 +20,14 @@ export default function Location() {
             ref={ref}
             initial={{ opacity: 0, y: 20 }}
             animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8 }}
+            transition={{ delay: 0.5, duration: 1 }}
             className="text-center space-y-4 mb-16"
           >
 
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ delay: isAnimated ? 0.5 : 0, duration: 0.6 }}
+              transition={{ delay: 0.5, duration: 1 }}
               className="text-4xl md:text-5xl font-serif text-gray-800"
             >
               Event Location
@@ -37,7 +37,7 @@ export default function Location() {
             <motion.div
               initial={{ scale: 0 }}
               animate={isAnimated ? { scale: 1 } : { scale: 0 }}
-              transition={{ delay: isAnimated ? 0.7 : 0, duration: 0.6 }}
+              transition={{ delay: 0.5, duration: 1 }}
               className="flex items-center justify-center gap-4 pt-4"
             >
               <div className="h-[1px] w-12 bg-rose-200" />
@@ -52,7 +52,7 @@ export default function Location() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ duration: 0.8 }}
+              transition={{ delay: 0.8, duration: 1 }}
               className="space-y-6"
             >
               <DecorativeCard noOrnaments={true} className="text-left">
@@ -80,7 +80,7 @@ export default function Location() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-              transition={{ duration: 0.8 }}
+              transition={{ delay: 0.8, duration: 1 }}
               className="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg border-8 border-white"
             >
               <iframe
@@ -111,7 +111,7 @@ export default function Location() {
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 0.6 }}
+                  transition={{ delay: 0.8, duration: 1 }}
                   className="text-xs text-gray-500 italic text-center mt-3"
                 >
                   *Note: {config.maps_notes}

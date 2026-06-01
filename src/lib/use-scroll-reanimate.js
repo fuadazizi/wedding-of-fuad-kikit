@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
  * - If the element is in the viewport: isAnimated is true.
  * - If the element goes above the viewport (scrolling down): isAnimated remains true.
  * - If the element goes below the viewport (scrolling up): isAnimated resets to false.
- * 
+ *
  * @param {number} threshold - The intersection threshold (default: 0.25).
  * @returns {[React.RefObject, boolean]} An array containing the ref to attach to the element and the animation state.
  */
-export function useScrollReanimate(threshold = 0.25) {
+export function useScrollReanimate(threshold = 0.3) {
   const ref = useRef(null);
   const [isAnimated, setIsAnimated] = useState(false);
 
@@ -34,7 +34,7 @@ export function useScrollReanimate(threshold = 0.25) {
       },
       {
         threshold,
-      }
+      },
     );
 
     observer.observe(el);

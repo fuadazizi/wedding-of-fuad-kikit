@@ -11,11 +11,22 @@ import { useState, useRef, useEffect, useCallback } from "react";
  * @returns {Object} Audio state and controls
  */
 export function useAudio(options = {}) {
-  const { src = "/audio/bermuara.mp3", loop = true, initialVolume = 0.7 } = options;
+  const {
+    src = "/audio/bermuara.mp3",
+    loop = true,
+    initialVolume = 0.5,
+  } = options;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isReady, setIsReady] = useState(false);
-  const [volume, setVolume] = useState(initialVolume);
+  const [volume, setVolume] = useState(() => {
+    try {
+      const savedVolume = localStorage.getItem("sakeenah_audio_volume");
+      return savedVolume !== null ? parseFloat(savedVolume) : initialVolume;
+    } catch (e) {
+      return initialVolume;
+    }
+  });
 
   const audioRef = useRef(null);
   const wasPlayingRef = useRef(false);
@@ -112,11 +123,27 @@ export function useAudio(options = {}) {
     }
   }, [isPlaying, play, pause]);
 
+  // Change volume level (0.0 to 1.0)
+  const changeVolume = useCallback((newVolume) => {
+    const vol = Math.max(0, Math.min(1, newVolume));
+    setVolume(vol);
+    if (audioRef.current) {
+      audioRef.current.volume = vol;
+    }
+    try {
+      localStorage.setItem("sakeenah_audio_volume", vol.toString());
+    } catch (e) {
+      console.warn("Could not save volume preference:", e);
+    }
+  }, []);
+
   return {
     isPlaying,
     isReady,
     play,
     pause,
     toggle,
+    volume,
+    changeVolume,
   };
 }
