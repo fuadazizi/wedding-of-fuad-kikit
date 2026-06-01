@@ -100,7 +100,7 @@ function useScrollVelocity() {
  * - Scrolling down: leaves drift upward slightly (as if caught in updraft)
  * - Scrolling up: leaves fall faster (as if pushed by downdraft)
  */
-export default function FallingElements({ count = 30 }) {
+export default function FallingElements({ count = 10 }) {
   const [dimensions, setDimensions] = useState({ width: 430, height: 1000 });
   const scrollVelocity = useScrollVelocity();
   const containerRef = useRef(null);
