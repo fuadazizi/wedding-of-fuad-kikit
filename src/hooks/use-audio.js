@@ -14,7 +14,7 @@ export function useAudio(options = {}) {
   const {
     src = "/audio/bermuara.mp3",
     loop = true,
-    initialVolume = 0.5,
+    initialVolume = 0.7,
   } = options;
 
   const [isPlaying, setIsPlaying] = useState(false);

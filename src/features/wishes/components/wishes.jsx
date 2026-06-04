@@ -403,7 +403,7 @@ export default function Wishes() {
                         name="guestName"
                         autoComplete="name"
                         placeholder="Masukkan nama kamu..."
-                        value={guestName}
+                        value=""
                         onChange={(e) => setGuestName(e.target.value)}
                         className="w-full px-4 py-2.5 rounded-xl border bg-white/50 border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-gray-700 placeholder-gray-400"
                         required
