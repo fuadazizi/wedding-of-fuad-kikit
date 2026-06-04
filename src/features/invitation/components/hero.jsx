@@ -54,7 +54,6 @@ export default function Hero() {
   const [guestName, setGuestName] = useState("");
 
   useEffect(() => {
-    // Get guest name from localStorage
     const storedGuestName = getGuestName();
     if (storedGuestName) {
       setGuestName(storedGuestName);

@@ -1,14 +1,91 @@
+import { useRef, useEffect } from "react";
 import { useConfig } from "@/features/invitation/hooks/use-config";
-import { Clock, MapPin, CalendarCheck, ExternalLink } from "lucide-react";
+import { MapPin, CalendarCheck, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { formatEventDate } from "@/lib/format-event-date";
 import { useScrollReanimate } from "@/lib/use-scroll-reanimate";
 
 import DecorativeCard from "@/components/ui/decorative-card";
 
+// Helper to extract coordinates from Google Maps embed URL
+function getCoordsFromGmapsEmbed(embedUrl) {
+  if (!embedUrl) return null;
+  const latMatch = embedUrl.match(/!3d(-?\d+\.\d+)/);
+  const lngMatch = embedUrl.match(/!2d(-?\d+\.\d+)/);
+  if (latMatch && lngMatch) {
+    return [parseFloat(latMatch[1]), parseFloat(lngMatch[1])];
+  }
+  return null;
+}
+
 export default function Location() {
   const config = useConfig(); // Use hook to get config from API or fallback to static
   const [ref, isAnimated] = useScrollReanimate(0.25);
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+
+  useEffect(() => {
+    // Check if Leaflet is loaded
+    if (!window.L || !mapRef.current) return;
+
+    // Clean up any existing map instance first
+    if (mapInstanceRef.current) {
+      mapInstanceRef.current.remove();
+      mapInstanceRef.current = null;
+    }
+
+    const hasExplicitCoords = config.maps_latitude && config.maps_longitude;
+    const coords = hasExplicitCoords
+      ? [parseFloat(config.maps_latitude), parseFloat(config.maps_longitude)]
+      : getCoordsFromGmapsEmbed(config.maps_embed) || [-6.990835, 107.592897];
+
+    // Initialize map
+    const map = window.L.map(mapRef.current, {
+      zoomControl: true,
+      scrollWheelZoom: false, // Prevent zoom on scroll (better UX on mobile/one-page)
+    }).setView(coords, 16);
+
+    mapInstanceRef.current = map;
+
+    // Add OpenStreetMap tile layer
+    window.L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    // Setup custom marker icon using absolute CDN links to fix missing marker assets
+    const customIcon = window.L.icon({
+      iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+      iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+      shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+    });
+
+    // Add marker
+    const marker = window.L.marker(coords, { icon: customIcon }).addTo(map);
+
+    // Bind popup
+    if (config.location) {
+      marker.bindPopup(`<div style="font-family: inherit; font-size: 14px;"><strong style="color: #1f2937;">${config.location}</strong><br/><span style="color: #4b5563;">${config.address || ""}</span></div>`).openPopup();
+    }
+
+    // Handle Framer Motion transition delay
+    const resizeTimer = setTimeout(() => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.invalidateSize();
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(resizeTimer);
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, [config.maps_embed, config.location, config.address]);
 
   return (
     <>
@@ -81,18 +158,9 @@ export default function Location() {
               initial={{ opacity: 0, x: -50 }}
               animate={isAnimated ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
               transition={{ delay: 0.8, duration: 1 }}
-              className="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg border-8 border-white"
+              className="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg border-8 border-white relative z-0"
             >
-              <iframe
-                src={config.maps_embed}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-full"
-              ></iframe>
+              <div ref={mapRef} className="w-full h-full" />
             </motion.div>
             {/* Action Button - Full Width */}
             <div className="">

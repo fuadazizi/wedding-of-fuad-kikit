@@ -95,13 +95,20 @@ export function InvitationProvider({ children }) {
 
   // Extract and store guest name from URL, then clean URL
   useEffect(() => {
-    const urlParams = new URLSearchParams(location.search);
-    const guestParam = urlParams.get("guest");
+    const search = location.search;
+
+    // Parse guest parameter manually to preserve unencoded '&' character
+    let guestParam = null;
+    const guestIndex = search.indexOf("guest=");
+    if (guestIndex !== -1) {
+      const rawValue = search.substring(guestIndex + 6);
+      guestParam = rawValue;
+    }
 
     // Store guest name if present (even if different from stored - auto-update)
     if (guestParam) {
       try {
-        // Guest param is a slug (e.g. "fuad-azizi") → convert to "Fuad Azizi"
+        // Try decoding as safe base64 first, fallback to slug conversion
         const decodedName = slugToName(guestParam);
         if (decodedName) {
           const storedName = localStorage.getItem("sakeenah_guest_name");
@@ -118,8 +125,9 @@ export function InvitationProvider({ children }) {
     }
 
     // Clean URL if we have UID in path or guest in query params
+    const urlParams = new URLSearchParams(search);
     const hasUidInPath = location.pathname !== "/" && location.pathname !== "";
-    const hasGuestParam = urlParams.has("guest");
+    const hasGuestParam = guestIndex !== -1;
     const hasUidParam = urlParams.has("uid");
 
     if (hasUidInPath || hasGuestParam || hasUidParam) {
@@ -146,7 +154,7 @@ export function InvitationProvider({ children }) {
     },
     // Skip API call entirely in static mode
     // enabled: !!invitationUid && !IS_STATIC_MODE,
-    enabled:false,
+    enabled: false,
     staleTime: 10 * 60 * 1000, // 10 minutes
   });
 

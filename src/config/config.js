@@ -19,6 +19,8 @@ const config = {
     maps_url: "https://maps.app.goo.gl/ZHZCXbELoXd6WMnPA",
     gmaps_name:
       "Lumpia basah Let's GO, Rancamanyar, Baleendah, Bandung Regency, West Java 40375, Indonesia",
+    maps_latitude: -6.99030254600919,
+    maps_longitude: 107.59543981349263,
     maps_embed:
       // "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0000000000005!2d106.8270733147699!3d-6.175392995514422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4f1b6d7b1e7%3A0x2e69f4f1b6d7b1e7!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1633666820004!5m2!1sid!2sid",
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.156544575283!2d107.5928966749972!3d-6.990835293010201!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e98d930b77d7%3A0x97da5230f519b26b!2sLumpia%20basah%20Let%27s%20GO!5e0!3m2!1sid!2sid!4v1774712047879!5m2!1sid!2sid",
@@ -30,7 +32,7 @@ const config = {
     location: "Kediaman Mempelai Wanita",
     // Full address of the wedding venue
     address:
-      "Gang Pa Ondo (Paling Ujung), Jl. Rancamanyar, Kec. Baleendah, Kab. Bandung",
+      "Gang Pa Ondo, Kp. Bojongkoneng, RT/RW 06/12, Jl. Rancamanyar, Kec. Baleendah, Kab. Bandung",
     // Image that appears when link is shared on social media
     ogImage: "/images/og-image.jpg",
     // Icon that appears in browser tab
