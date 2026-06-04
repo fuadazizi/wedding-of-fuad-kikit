@@ -63,7 +63,7 @@ const LandingPage = ({ onOpenInvitation }) => {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-[12] tracking-[0.25em] uppercase text-gray-500 font-medium text-center mb-6"
             >
-              Wedding Invitation of
+              Wedding of
             </motion.p>
 
             {/* Initials row */}
