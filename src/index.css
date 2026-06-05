@@ -133,6 +133,10 @@ main {
   }
 }
 
+#wishes {
+  z-index: 999;
+}
+
 .bg-rose-300 {
   background-color: #D6B456;
 }
@@ -297,6 +301,11 @@ main {
 
 .hover\:bg-pink-200:hover {
   background-color: rgb(232 253 227) !important;
+}
+
+/* Flip card 3D perspective */
+.perspective-500 {
+  perspective: 500px;
 }
 
 /* Falling leaf */

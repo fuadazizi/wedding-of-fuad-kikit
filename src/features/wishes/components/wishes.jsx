@@ -82,6 +82,14 @@ export default function Wishes() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (selectedWish) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [selectedWish]);
+
   const options = [
     { value: "ATTENDING", label: "Ya, saya akan hadir" },
     { value: "NOT_ATTENDING", label: "Tidak, saya tidak bisa hadir" },
