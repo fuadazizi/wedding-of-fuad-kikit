@@ -85,8 +85,10 @@ export default function Wishes() {
   useEffect(() => {
     if (selectedWish) {
       document.body.style.overflow = "hidden";
+      document.getElementById("wishes").classList.add("modal-open");
     } else {
       document.body.style.overflow = "auto";
+      document.getElementById("wishes").classList.remove("modal-open");
     }
   }, [selectedWish]);
 

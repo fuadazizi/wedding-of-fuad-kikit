@@ -133,7 +133,7 @@ main {
   }
 }
 
-#wishes {
+#wishes.modal-open {
   z-index: 999;
 }
 
