@@ -173,7 +173,7 @@ export default function Location() {
                 className="w-full flex items-center justify-center gap-1.5 bg-white text-gray-600 px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors text-sm"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span className="font-semibold">View Map</span>
+                <span className="font-semibold">Petunjuk Arah</span>
               </motion.a>
               {config.maps_notes && (
                 <motion.p
