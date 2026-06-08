@@ -98,7 +98,7 @@ export default function Location() {
             initial={{ opacity: 0, y: 20 }}
             animate={isAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="text-center space-y-4 mb-16"
+            className="text-center space-y-4 mb-8"
           >
 
             <motion.h2

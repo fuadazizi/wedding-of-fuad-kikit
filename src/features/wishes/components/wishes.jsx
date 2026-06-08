@@ -57,13 +57,6 @@ export default function Wishes() {
     }
   };
 
-  // Pre-fill guest name from localStorage on mount
-  useEffect(() => {
-    const storedGuestName = getGuestName();
-    if (storedGuestName) {
-      setGuestName(storedGuestName);
-    }
-  }, []);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -231,7 +224,7 @@ export default function Wishes() {
             initial={{ opacity: 0, y: 20 }}
             animate={isSectionAnimated ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="text-center space-y-4 mb-16"
+            className="text-center space-y-4 mb-8"
           >
 
             <h2 className="text-4xl md:text-5xl font-serif text-gray-800">
@@ -413,7 +406,7 @@ export default function Wishes() {
                         name="guestName"
                         autoComplete="name"
                         placeholder="Masukkan nama kamu..."
-                        value=""
+                        value={guestName}
                         onChange={(e) => setGuestName(e.target.value)}
                         className="w-full px-4 py-2.5 rounded-xl border bg-white/50 border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-gray-700 placeholder-gray-400"
                         required
@@ -628,7 +621,7 @@ export default function Wishes() {
                                   </h4>
                                   {getAttendanceIcon(wish.attendance)}
                                 </div>
-                                <div className="flex items-center space-x-1 text-gray-400 text-xs mt-0.5">
+                                {/* <div className="flex items-center space-x-1 text-gray-400 text-xs mt-0.5">
                                   <Clock className="w-3 h-3 flex-shrink-0" />
                                   <time className="truncate">
                                     {formatEventDate(
@@ -637,7 +630,7 @@ export default function Wishes() {
                                       true,
                                     )}
                                   </time>
-                                </div>
+                                </div> */}
                               </div>
 
                               {/* New badge */}
