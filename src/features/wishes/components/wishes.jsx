@@ -587,7 +587,7 @@ export default function Wishes() {
               wishes &&
               wishes.filter((w) => w?.message).length > 0 && (
                 <AnimatePresence>
-                  <div className="max-h-96 overflow-y-auto py-2 space-y-4 scrollbar-hide">
+                  <div className="max-h-[600px] overflow-y-auto py-2 space-y-4 scrollbar-hide">
                     {wishes
                       .filter((w) => w.message)
                       .map((wish, index) => (

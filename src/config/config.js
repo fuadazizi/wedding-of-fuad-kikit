@@ -13,7 +13,7 @@ const config = {
     brideIg: "kikit_elisa_",
     brideText: "Putri pertama dari",
     parentGroom: "Bapak Imam Rofii & Ibu Muthi'ah",
-    parentBride: "Alm. Bapak Wahyu & Ibu Edah",
+    parentBride: "Alm. Bapak Wahyu W. & Ibu Edah Suhendah",
 
     date: "2026-06-13",
     maps_url: "https://maps.app.goo.gl/ZHZCXbELoXd6WMnPA",
